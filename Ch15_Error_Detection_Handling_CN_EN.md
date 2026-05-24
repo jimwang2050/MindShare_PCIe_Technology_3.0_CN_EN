@@ -2,100 +2,155 @@
 # 第15章：错误检测与处理
 
 > 中英文对照翻译 | Chinese-English Parallel Translation
-> Source: MindShare PCI Express Technology 3.0 | Pages: 706–761 (56 pages)
+> Source: MindShare PCI Express Technology 3.0 | Pages: 706–758 (53 pages)
 
 ---
 
-## Error Classification
-## 错误分类
+## Background: PCI Error Handling / 背景：PCI错误处理
 
-PCIe errors fall into three severity categories:
-- **Correctable Errors**: Hardware-corrected (e.g., correctable ECC error). Reported via ERR_COR Message. / 可纠正错误：硬件已纠正。通过ERR_COR消息报告。
-- **Non-Fatal Errors**: Transaction failed but Link remains operational. Data may be lost. Reported via ERR_NONFATAL Message. / 非致命错误：事务失败但链路仍可运行。数据可能丢失。通过ERR_NONFATAL消息报告。
-- **Fatal Errors**: Link reliability compromised. Reported via ERR_FATAL Message. May trigger Link retraining. / 致命错误：链路可靠性受损。通过ERR_FATAL消息报告。可能触发链路重训练。
+Software backward compatibility with PCI is an important feature of PCIe, and the PCI error handling model forms the baseline. In the PCI model, errors are reported through two bits in the PCI Status Register: **Signaled System Error (SERR#)** for fatal errors and address parity errors, and **Parity Error Detected (PERR#)** for data parity errors. These sideband signals are routed to the system's NMI or SMI handler, which then queries all PCI devices to identify the error source — a slow and imprecise process.
+
+> 与PCI的软件向后兼容是PCIe的重要特性，PCI错误处理模型构成基线。PCI模型中错误通过Status Register中的SERR#（致命错误和地址奇偶校验错误）和PERR#（数据奇偶校验错误）两个位报告。这些边带信号路由到系统NMI或SMI处理程序，后者随后查询所有PCI设备以识别错误源——这是一个缓慢且不精确的过程。
 
 ---
 
-## Error Sources
-## 错误来源
+## PCIe Error Classification / PCIe错误分类
 
-### Physical Layer Errors / 物理层错误
-- **8b/10b Code Violation or Disparity Error** (Gen1/2) / 8b/10b编码违例或差异错误
-- **128b/130b Sync Header Error** (>1% invalid Sync Headers, Gen3) / 128b/130b同步头错误
-- **Receiver Error** (analog front-end detects invalid signal) / 接收器错误（模拟前端检测无效信号）
-- **Framing Error** (STP where END expected, etc.) / 成帧错误
-- **Loss of Symbol/Block Lock** / 符号/Block锁定丢失
+PCIe enhances error handling significantly with three severity levels, each with distinct reporting and handling mechanisms:
 
-### Data Link Layer Errors / 数据链路层错误
-- **Bad TLP**: LCRC mismatch / LCRC不匹配
-- **Bad DLLP**: DLLP CRC mismatch / DLLP CRC不匹配
-- **Sequence Number Error**: Lost or out-of-order TLP / 序列号错误：丢失或乱序TLP
-- **Replay Timeout**: REPLAY_TIMER expired / 重放定时器超时
-- **Replay Number Rollover**: Too many replay attempts / 重放次数翻转
+**1. Correctable Errors:** Errors that hardware can correct without software intervention or loss of data integrity. Examples: receiver errors corrected by retransmission (Ack/Nak protocol), correctable ECC errors on internal data paths. These are logged for monitoring but do not disrupt normal operation.
 
-### Transaction Layer Errors / 事务层错误
-- **Poisoned TLP**: EP bit set in header — data payload is invalid / EP位（中毒位）置位——数据载荷无效
-- **ECRC Error**: End-to-End CRC mismatch / 端到端CRC不匹配
-- **Unsupported Request (UR)**: Request type not supported by the receiver / 接收端不支持的请求类型
-- **Completer Abort (CA)**: Receiver can't complete the request / 接收端无法完成请求
-- **Completion Timeout**: Requester never received Completion / 请求者从未收到完成
-- **Malformed TLP**: Header contains invalid field values / Header包含无效字段值
+**2. Non-Fatal Errors:** Uncorrectable errors that affect a particular Function but do not corrupt the entire system state. The Link and other Functions may continue operating. Examples: Unsupported Request completion, Completion Timeout, Poisoned TLP received. The device may be reset and recovered.
+
+**3. Fatal Errors:** Uncorrectable errors that corrupt the system state or make the Link unreliable. Examples: Malformed TLP, Receiver Overflow, Flow Control Protocol Error, Data Link Protocol Error. These typically require Link re-training or a full device reset.
+
+> PCIe以三个严重级别显著增强错误处理：
+> **1. 可纠正错误：** 硬件可在无需软件干预或不损失数据完整性的情况下纠正。如通过重传纠正的接收端错误、内部数据路径上的可纠正ECC错误。记录供监控但不中断正常运行。
+> **2. 非致命错误：** 影响特定Function但不破坏整个系统状态的不可纠正错误。如Unsupported Request completion、Completion Timeout、接收Poisoned TLP。设备可复位和恢复。
+> **3. 致命错误：** 破坏系统状态或使链路不可靠的不可纠正错误。如Malformed TLP、Receiver Overflow、流控协议错误、数据链路协议错误。通常需要链路重训练或完全设备复位。
 
 ---
 
-## Error Reporting Mechanisms
-## 错误报告机制
+## Error Detection Mechanisms / 错误检测机制
 
-PCIe provides two error reporting models:
-- **Baseline**: Simple registers (PCI-compatible Command/Status registers)
-- **Advanced Error Reporting (AER)**: Extended Capability with per-error-type mask/severity/status registers. Mandatory for Root Ports and recommended for Endpoints. Provides much richer error tracking — Header Log captures the failing TLP's header for debugging.
+PCIe implements multiple layers of error detection:
 
-> PCIe提供两种错误报告模型：基线（PCI兼容Command/Status寄存器简单报告）和高级错误报告（AER——每错误类型mask/severity/status寄存器的扩展能力。Root Port强制，端点推荐。Header Log捕获故障TLP的header以供调试）。
+### Link-Level Errors (Data Link Layer)
+- **LCRC Error:** The 32-bit Link CRC appended to every TLP by the Data Link Layer. If the receiver detects LCRC mismatch, the TLP is NAKed and retransmitted. LCRC provides correction by retransmission.
+- **Sequence Number Error:** Each TLP carries a sequence number. Missing or duplicate sequence numbers indicate a DLLP loss or replay buffer corruption.
+- **FC Protocol Error:** Transmitter sending more TLPs than the receiver has advertised credits for.
 
-### Error Signaling Messages
-### 错误信令消息
+> **LCRC错误：** 数据链路层为每个TLP附加32位Link CRC。若接收端检测LCRC不匹配则NAK并重传。LCRC通过重传提供纠正。
+> **序列号错误：** 每个TLP携带序列号。缺失或重复序列号指示DLLP丢失或重播缓冲损坏。
+> **FC协议错误：** 发送端发送超过接收端广告信用的TLP。
 
-- **ERR_COR**: Correctable error detected / 检测到可纠正错误
-- **ERR_NONFATAL**: Non-fatal error / 非致命错误
-- **ERR_FATAL**: Fatal error / 致命错误
+### Transaction-Level Errors (Transaction Layer)
+- **Poisoned TLP:** A TLP whose EP bit is set, indicating the data is known to be bad. The receiver can propagate the poison or take corrective action.
+- **ECRC Error:** Optional End-to-End CRC check. Unlike LCRC (hop-by-hop), ECRC provides end-to-end integrity from Requester to Completer. Detected but not correctable — reported as a non-fatal error.
+- **Malformed TLP:** TLP with invalid header fields (wrong Type field, length mismatch, invalid TC, etc.).
+- **Unsupported Request (UR):** A Request that the Completer does not support.
+- **Completion Timeout:** Requester does not receive a Completion within the timeout period (typically 10 ms to 50 ms, configuration-dependent).
 
-All three are routed to the Root Complex (Implicit Routing). The Root Complex logs the error, may signal an interrupt, and optionally signals the system error (SERR#/NMI) for fatal errors.
+> **Poisoned TLP：** EP位置位的TLP，指示数据已知损坏。接收端可传播毒药或采取纠正措施。
+> **ECRC错误：** 可选的端到端CRC检查。与LCRC(逐跳)不同，ECRC提供从请求者到完成者的端到端完整性。可检测但不可纠正。
+> **Malformed TLP：** 包含无效头字段的TLP。
+> **Unsupported Request：** 完成者不支持的请求。
+> **Completion Timeout：** 请求者未在超时期间内收到Completion(通常10-50ms)。
 
-> 三种消息均隐式路由到根联合体。根联合体记录错误，可发信号中断，对于致命错误可选发信号系统错误（SERR#/NMI）。
+### Physical Layer Errors
+- **8b/10b Decode Error (Gen1/Gen2):** Received Symbol is not in the valid 8b/10b table. Typically indicates a bit error.
+- **Framing Error:** Incorrect Sync Header (00b or 11b in Gen3), or missing/extra Symbols in a packet.
+- **Elastic Buffer Overflow/Underflow:** Clock compensation mechanism failure.
+- **Loss of Symbol Lock / Block Lock:** LTSSM transitions to Recovery.
 
----
-
-## Error Handling Flow
-## 错误处理流程
-
-1. Hardware detects error / 硬件检测错误
-2. Error is logged in the device's AER (or baseline) registers / 错误记录在设备AER（或基线）寄存器中
-3. If error is enabled (unmasked) and severity matches, device sends ERR_COR/ERR_NONFATAL/ERR_FATAL Message to Root Complex / 若错误已启用（非屏蔽）且严重度匹配，设备向根联合体发送错误消息
-4. Root Complex processes the error: logs, interrupts, optionally signals SERR#/NMI / 根联合体处理错误：记录、中断、可选发信号系统错误
-5. System software (OS/driver) reads error logs and takes appropriate action / 系统软件（OS/驱动）读取错误日志并采取适当行动
-
----
-
-## Error Poisoning (EP Bit)
-## 错误中毒 (EP位)
-
-When a device detects uncorrectable data in a TLP payload, it sets the **EP (Error Poisoned)** bit in the TLP header. This indicates "the data may be bad but use it if you can." Receivers must not crash on poisoned data — they may use it (e.g., writes), forward it (through a Switch), or discard it (reads with EP set + ECRC error).
-
-> 当设备在TLP载荷中检测到无法纠正的数据时，设置TLP header中的**EP（错误中毒/Error Poisoned）**位。这表示"数据可能有问题，但尽可能使用它"。接收端不得因中毒数据崩溃——可使用它（如写入）、转发它（通过Switch）或丢弃它（EP+ECRC错误时读取）。
+> **8b/10b解码错误(Gen1/Gen2)：** 接收Symbol不在有效8b/10b表中。
+> **定帧错误：** Gen3中非法Sync Header(00b或11b)。
+> **弹性缓冲溢出/欠载：** 时钟补偿机制失败。
+> **丢失符号锁定/块锁定：** LTSSM转换到Recovery。
 
 ---
 
-| English | 中文 | Notes |
-|---------|------|-------|
-| AER | 高级错误报告 | Extended Capability |
-| CA (Completer Abort) | 完成者中止 | |
-| Correctable / Non-Fatal / Fatal | 可纠正/非致命/致命 | 三种严重度 |
-| Completion Timeout | 完成超时 | |
-| ECRC | 端到端CRC | 可选 |
-| EP (Error Poisoned) | 错误中毒位 | TLP Header |
-| ERR_COR/NONFATAL/FATAL | 错误信令消息 | 隐式路由到RC |
-| Header Log | 头部日志 | AER：捕获故障TLP |
-| Malformed TLP | 畸形TLP | 无效字段值 |
-| Poisoned TLP | 中毒TLP | EP=1 |
-| SERR# / NMI | 系统错误/不可屏蔽中断 | 致命错误 |
-| UR (Unsupported Request) | 不支持的请求 | |
+## Error Reporting: Baseline vs AER / 错误报告：基线 vs 高级错误报告
+
+### Baseline Error Reporting (PCI-Compatible)
+
+The PCI-compatible error registers in the PCI Status Register and the Device Status Register provide basic error reporting:
+- **Signaled System Error:** Set when the Function sends an ERR_FATAL or ERR_NONFATAL Message
+- **Detected Parity Error:** Set on any uncorrectable error (in PCIe, this is overloaded for all uncorrectable errors)
+
+Baseline reporting does not distinguish among error types — all uncorrectable errors look the same to legacy software.
+
+> PCI兼容的基线错误报告仅通过Status Register中的Signaled System Error和Detected Parity Error位，不区分错误类型——所有不可纠正错误对传统软件看起来相同。
+
+### Advanced Error Reporting (AER)
+
+AER (ECAP ID 0001h) provides significantly richer error reporting:
+
+- **Uncorrectable Error Status Register (Offset 04h):** Individual bits for each error type — Malformed TLP, Receiver Overflow, Unexpected Completion, Completer Abort, Completion Timeout, Flow Control Protocol Error, Poisoned TLP Received, ECRC Error, Unsupported Request, ACS Violation, Uncorrectable Internal Error, MC Blocked TLP, AtomicOp Egress Blocked, TLP Prefix Blocked.
+
+- **Uncorrectable Error Severity Register (Offset 0Ch):** Each bit selects whether the corresponding error is treated as FATAL or NON-FATAL. Software can configure the severity to match system policy.
+
+- **Correctable Error Status Register (Offset 10h):** Receiver Error, Bad TLP, Bad DLLP, REPLAY_NUM Rollover, Replay Timer Timeout, Advisory Non-Fatal Error, Corrected Internal Error, Header Log Overflow.
+
+- **Header Log Register (Offset 1Ch):** Captures the header of the first TLP that caused an uncorrectable error. Essential for error diagnosis.
+
+> AER提供显著更丰富的错误报告：每个错误类型在Uncorrectable Error Status中有独立位；软件可通过Severity Register配置致命/非致命分类；Header Log捕获首个错误TLP头，对诊断至关重要。
+
+---
+
+## Error Signaling: Messages / 错误信令：消息
+
+PCIe uses in-band Messages (not sideband pins) to signal errors:
+- **ERR_COR:** Sent when a correctable error is detected and reporting is enabled
+- **ERR_NONFATAL:** Sent when a non-fatal uncorrectable error is detected
+- **ERR_FATAL:** Sent when a fatal uncorrectable error is detected
+
+These Messages are routed upstream (toward the Root Complex) using implicit routing. The Root Complex logs the error and may signal the OS via SERR#/NMI or an interrupt, depending on the Root Control register settings.
+
+> PCIe使用带内Message信号错误：ERR_COR(可纠正)、ERR_NONFATAL(非致命)、ERR_FATAL(致命)。这些Message使用隐式路由向上游(Root Complex)发送。Root Complex记录错误并可能通过SERR#/NMI或中断信号OS。
+
+---
+
+## Error Handling Flow / 错误处理流程
+
+1. **Detection:** Hardware detects error at any layer
+2. **Logging:** Error status bit is set in the appropriate register (Device Status for baseline, AER registers for advanced)
+3. **Signaling:** First error triggers an error Message (ERR_COR/ERR_NONFATAL/ERR_FATAL). Subsequent errors of the same severity may be masked until the first is cleared.
+4. **Root Complex Processing:** RC receives error Message, sets corresponding Root Error Status bits, may assert NMI/SERR# based on Root Control
+5. **Software Handler:** OS error handler (AER driver) scans the hierarchy, reads AER registers for all devices, identifies the error source, records logs, and takes recovery action (Function reset, Link retraining, device removal)
+
+> 检测→记录(状态位置位)→信令(首个错误触发Message，后续同类可被屏蔽)→Root Complex处理(RC设置对应状态位，可能断言NMI/SERR#)→软件处理(OS AER驱动扫描层次结构、读取AER寄存器、识别错误源、记录日志、采取恢复措施)。
+
+---
+
+## Multiple Error Handling / 多错误处理
+
+AER supports recording multiple error sources. If a second error occurs before the first is cleared, the **Multiple Header Recording Capable** bit indicates the device can log multiple headers. The Header Log overflow bit is set when the log capacity is exceeded.
+
+> AER支持记录多个错误源。若首个错误清除前第二个发生，Multiple Header Recording Capable位指示设备可记录多个头部。Header Log溢出位在日志容量超出时置位。
+
+---
+
+## Advisory Non-Fatal Errors / 建议性非致命错误
+
+A special category: errors that are technically uncorrectable but do not necessarily indicate a hardware failure. The Completer may set the Advisory Non-Fatal Error status. Examples: Completer sending a Completion with UR/CA status (software programming error, not hardware fault), intermediate receiver forwarding a poisoned TLP. These are logged for diagnostic purposes but typically do not trigger fatal error handling.
+
+> 特殊类别：技术上不可纠正但不一定指示硬件故障的错误。例如Completer发送UR/CA状态Completion(软件编程错误)、中间接收端转发Poisoned TLP。记录供诊断但通常不触发致命错误处理。
+
+---
+
+## ECRC: End-to-End CRC / 端到端CRC
+
+ECRC is an optional 32-bit CRC appended to TLPs at the Transaction Layer (unlike LCRC which is at the Data Link Layer and is regenerated at each hop). ECRC protects against internal data corruption within Switches or the Root Complex between LCRC check and regeneration. ECRC is generated by the Requester and checked by the ultimate Completer.
+
+ECRC is enabled/disabled through the AER Capabilities and Control register. If an ECRC error is detected, the Completer sets the ECRC Error bit in the Uncorrectable Error Status register and the TLP is treated as poisoned.
+
+> ECRC是事务层的可选32位CRC（不同于每条链路重新生成的LCRC）。它保护Switch或Root Complex内部LCRC校验与重新生成之间的数据完整性。由请求者生成，最终完成者校验。通过AER Capabilities and Control寄存器启用/禁用。
+
+---
+
+## Data Poisoning / 数据毒化
+
+When a TLP's data is known to be bad (but the header is intact), the **EP (Error Poisoned)** bit is set in the TLP header. The receiver may forward the poisoned data or discard it. If the data is used, the error propagates. Poisoning is essential for error forwarding — it marks data that was corrupted at one point so that an endpoint that eventually uses the data knows it is unreliable.
+
+> 当TLP数据已知损坏(但头完好)时，TLP头中**EP位**置位。接收端可转发毒化数据或丢弃。若数据被使用则错误传播。毒化对错误转发至关重要——标记在某点损坏的数据，使最终使用该数据的端点知道其不可靠。
