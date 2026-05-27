@@ -2,161 +2,248 @@
 # 第16章：电源管理
 
 > 中英文对照翻译 | Chinese-English Parallel Translation
-> Source: MindShare PCI Express Technology 3.0 | Pages: 762–852 (91 pages)
+> Source: MindShare PCI Express Technology 3.0 — Pages: 762–852 (91 pages)
 
 ---
 
-## Introduction: Four Areas of PM Support / 引言：电源管理四大领域
+## Introduction / 引言
 
 PCI Express power management (PM) defines four major areas of support:
-1. **PCI-Compatible PM (PCI-PM):** Hardware/software compatible with the PCI Bus Power Management Interface Specification. Manages Function D-states (D0-D3) and the PCI Power Management Capability registers.
-2. **Native PCIe PM Extensions:** Active State Power Management (ASPM) — hardware-autonomous Link power reduction without software involvement.
-3. **L1 PM Substates:** Optional deeper L1 substates (L1.1, L1.2) for maximum idle power savings.
-4. **Auxiliary Power and Wakeup:** Mechanisms (Beacon, WAKE#) to wake sleeping Links when main power is removed.
+1. **PCI-Compatible PM** — Hardware and software compatible with the PCI Bus Power Management Interface Specification. Manages Function D-states (D0-D3) through the PCI Power Management Capability registers.
+2. **Native PCIe PM Extensions** — Active State Power Management (ASPM): hardware-autonomous Link power reduction without software involvement. L0s and L1 ASPM states.
+3. **L1 PM Substates** — Optional deeper L1 substates (L1.1, L1.2) defined by PCIe for maximum idle power savings using the CLKREQ# mechanism.
+4. **Auxiliary Power and Wakeup** — Beacon and WAKE# mechanisms to wake sleeping Links when main power is removed.
 
-> PCIe电源管理定义四大支持领域：PCI兼容PM(管理D0-D3状态)；原生PCIe PM扩展ASPM(硬件自主链路降功耗)；L1 PM子状态(L1.1/L1.2最大空闲省电)；辅助电源与唤醒机制。
-
----
-
-## Background: ACPI, OnNow, and the OS / 背景：ACPI、OnNow与操作系统
-
-PCIe PM works within the broader system PM framework defined by **ACPI (Advanced Configuration and Power Interface)**. ACPI defines:
-- **System S-states:** S0 (working), S1-S4 (sleep), S5 (soft off)
-- **Device D-states:** D0 (fully on), D1, D2 (intermediate), D3<sub>Hot</sub>, D3<sub>Cold</sub> (off)
-- **Processor C-states:** C0 (active), C1-Cn (idle)
-- **Link L-states:** L0, L0s, L1, L2, L3 (PCIe-specific, derived from D-states)
-
-> PCIe PM在ACPI定义的更广泛系统PM框架内工作。ACPI定义系统S状态、设备D状态、处理器C状态、链路L状态。
-
-The **OnNow Initiative** (Microsoft) aims for "Instant On" — the PC appears off but can wake instantly. PCIe PM contributes by allowing devices and Links to enter low-power states when idle while maintaining the ability to wake quickly.
-
-> OnNow倡议（Microsoft）的目标是即时启动——PC看似关闭但可即时唤醒。PCIe PM通过允许设备和链路在空闲时进入低功耗状态同时保持快速唤醒能力来贡献。
+> PCIe电源管理定义四大支持领域：PCI兼容PM管理D0-D3；原生ASPM硬件自主链路降功耗；L1.1/L1.2更深子状态通过CLKREQ#省电；辅助电源Beacon/WAKE#唤醒机制。
 
 ---
 
-## D-States: Device Power Management / D状态：设备电源管理
+## Background: ACPI, OnNow, and the OS / 背景：ACPI与OnNow
+
+PCIe PM works within the broader system PM framework defined by ACPI (Advanced Configuration and Power Interface). ACPI defines System S-states (S0-S5), Device D-states, and Processor C-states. The **OnNow Initiative** (Microsoft) aimed for "Instant On" — the PC appears off but can wake instantly when needed. PCIe PM contributes by allowing devices and Links to rapidly enter and exit low-power states.
+
+> PCIe PM在ACPI定义的更广泛系统PM框架内工作。OnNow倡议旨在即时启动——PC看似关闭但可即时唤醒。PCIe PM通过允许设备和链路快速进入和退出低功耗状态来贡献。
+
+The Windows OS plays a central role in PM policy decisions. The OS Power Manager receives PM events, queries device capabilities, and decides when to transition devices and the system to lower-power states. Drivers participate by saving/restoring device state and quiescing operations before transitions.
+
+> Windows OS在PM策略决策中起核心作用。OS电源管理器接收PM事件并决定何时转换到低功耗。驱动通过保存恢复设备状态参与。
+
+---
+
+## PCI-Compatible PM: D-States / PCI兼容PM：D状态
 
 ### D0 State — Fully Operational
+D0 is subdivided into **D0<sub>uninitialized</sub>** and **D0<sub>active</sub>**:
+- After Conventional Reset or FLR, the Function enters D0<sub>uninitialized</sub>.
+- After configuration (Memory Space Enable, I/O Space Enable, or Bus Master Enable set), it transitions to D0<sub>active</sub>. A Function remains in D0<sub>active</sub> even if these enable bits are subsequently cleared.
+- In D0<sub>active</sub>, the Function can initiate and respond to all TLP types.
 
-D0 is subdivided into **D0<sub>uninitialized</sub>** and **D0<sub>active</sub>**. After reset or FLR, the Function enters D0<sub>uninitialized</sub>. After configuration (Memory Space, I/O Space, or Bus Master Enable set), it transitions to D0<sub>active</sub>.
+### D1 and D2 States — Intermediate (Optional)
+D1 and D2 are optional intermediate power-saving states with different power/latency tradeoffs. D1 is typically shallower (faster restore); D2 is deeper (more power saved, slower restore).
 
-### D1 and D2 States — Intermediate Power Savings (Optional)
+**Behavior in D1/D2:**
+- Must not initiate Request TLPs (except Messages as defined in Section 2.2.8)
+- Only Configuration and Message Requests are accepted
+- All other Requests → Unsupported Request
+- Completions may be handled as Unexpected Completions
+- If an error caused by a received TLP is detected and reporting enabled, the Link must return to L0 and send an error Message
+- The driver must quiesce all outstanding transactions (terminate Requests with outstanding Completions) before the Function transitions
 
-D1 and D2 are optional intermediate states. Functions in D1 or D2 must not initiate Request TLPs (except Messages). Only Configuration and Message Requests are accepted. The driver must quiesce all outstanding transactions before the Function transitions to D1/D2.
+**Recovery:** System software restores D0<sub>active</sub> before memory/I/O access. Minimum recovery: 200 μs from D2→D0 before the next Request.
 
-### D3<sub>Hot</sub> State — Software-Accessible Low Power
+### D3<sub>Hot</sub> State — Software-Accessible Very Low Power
+D3<sub>Hot</sub> is required for all Functions. Main power is present but the Function is in very low power mode.
 
-When in D3<sub>Hot</sub>: main power is present but the Function is in very low power. Configuration and Message requests are the only accepted TLPs. If **No_Soft_Reset** is set, functional context is preserved and the Function returns to D0<sub>active</sub> on wake. Otherwise, it returns to D0<sub>uninitialized</sub> and requires full re-initialization. Minimum recovery time from D3<sub>Hot</sub> to D0: **10 ms** (unless Immediate_Readiness_on_Return_to_D0 is set).
+**Key PMCSR Fields:**
+- **No_Soft_Reset:** If Set → functional context maintained → returns to D0<sub>active</sub>. If Clear → context may be lost → returns to D0<sub>uninitialized</sub>.
+- **PME_En:** If Set → PME assertion from D3<sub>Hot</sub> enabled. PME context must be preserved.
+- **PowerState field:** Software writes to transition D-states.
+
+**Behavior:** Only Configuration and Message Requests are accepted. Recovery time: 10 ms minimum (unless Immediate_Readiness_on_Return_to_D0 is Set in PM Capabilities Register).
 
 ### D3<sub>Cold</sub> State — Power Removed
+Main power completely removed. Return to D0 requires Fundamental Reset (cold or warm) and full re-initialization. Wakeup from D3<sub>Cold</sub> requires auxiliary power (Vaux) and PME_En set.
 
-The Function's main power is removed. Wakeup (if supported) requires auxiliary power (Vaux) and a wakeup mechanism (Beacon or WAKE#). Return to D0 requires Fundamental Reset and full re-initialization.
+**Multi-Function Device Note:** Strongly recommended that every MFD Function sets No_Soft_Reset to avoid disrupting other active Functions during D3<sub>Hot</sub>→D0 transitions. FLR is also recommended for MFD Endpoint Functions.
 
-> D0分为D0<sub>uninitialized</sub>和D0<sub>active</sub>。D1/D2可选中间省电状态。D3<sub>Hot</sub>主电源存在但极低功耗，恢复至少10ms。D3<sub>Cold</sub>主电源移除，唤醒需辅助电源和唤醒机制，返回需基本复位。
+> D0分D0<sub>uninitialized</sub>和D0<sub>active</sub>。D1/D2可选省电状态，驱动须先停止未完成事务。D3<sub>Hot</sub>必备，仅接受Config/Message请求，恢复至少10ms。D3<sub>Cold</sub>主电源移除，需辅助电源唤醒。MFD强烈建议置位No_Soft_Reset避免影响其他活跃Function。
 
 ---
 
-## L-States: Link Power Management / L状态：链路电源管理
+## Link Power Management: L-States / 链路电源管理：L状态
 
-| L-State | Description | Power | Exit Latency | Key Feature |
-|---------|-------------|-------|-------------|-------------|
-| **L0** | Fully active | Highest | N/A | Normal packet traffic |
-| **L0s** | Standby | Low | Very short (~100 ns) | Per-direction, no handshake |
-| **L1** | Deeper standby | Very low | ~μs | Both directions, PM_Enter_L1 handshake |
-| **L1.1** | L1 substate | Lower | Longer | Common mode maintained, CLKREQ# |
-| **L1.2** | L1 substate | Lowest | Longest | Common mode not required |
-| **L2** | Sleep | ~0 mW | N/A (re-init) | Main power off, Vaux for wakeup |
-| **L3** | Off | 0 mW | N/A | No power at all |
+The Link PM state is determined by the D-state of the Downstream component connected to that Link. 
 
-The Link state is determined by the D-state of the Downstream component. For Multi-Function Devices, the Link enters L1 only when **all** Functions are programmed to a non-D0 state (non-ARI MFD) or when all are in non-D0 or D0<sub>uninitialized</sub> (ARI device).
+**Rules for Link State Transitions:**
+- **Single-Function device:** Upstream Port initiates L1 when its Function is programmed to D1/D2/D3<sub>Hot</sub>.
+- **Non-ARI Multi-Function Device:** L1 only when ALL Functions are programmed to non-D0 D-states.
+- **ARI Device:** L1 when at least one Function is in non-D0 AND all Functions are either non-D0 or D0<sub>uninitialized</sub>.
+- **SR-IOV:** Link Power State controlled solely by PFs; VF D-states do not affect the Link.
 
-> 链路状态由下游组件D状态决定。非ARI MFD仅在所有Function被编程到非D0后才进入L1。L0完全活跃、L0s短待机、L1深待机需握手、L1.1/L1.2更省电需CLKREQ#、L2/L3断电。
+> 链路PM状态由下游组件D状态决定。单Function→D1/D2/D3<sub>Hot</sub>即触发L1。非ARI MFD→所有Function到非D0。ARI→至少一个非D0且全部在非D0或D0<sub>uninitialized</sub>。SR-IOV仅PF控制链路。
+
+### L1 Entry Protocol (PCI-PM)
+
+The L1 entry through PCI-PM (software-directed D-state change) follows a precise sequence:
+1. PM software sends Configuration Write Request to Downstream Function's PMCSR PowerState field.
+2. Downstream component schedules Completion, accumulates minimum credits, suspends TLP scheduling.
+3. Waits for acknowledgment of PMCSR Write Completion and all previously sent TLPs (including retransmissions).
+4. Once all TLPs acknowledged, starts sending **PM_Enter_L1 DLLPs** repeatedly (max 8 Symbol times between transmissions at 8b/10b, 32 at 128b/130b).
+5. Upstream component, upon receiving PM_Enter_L1, blocks all TLP scheduling.
+6. Waits for last TLP acknowledgment.
+7. Sends **PM_Request_Ack DLLPs** repeatedly until it observes Electrical Idle on receive Lanes.
+8. Downstream component captures PM_Request_Ack, disables DLLP transmission, brings Link to Electrical Idle — **L1 entry complete**.
+
+Both components suspend Flow Control Update counters. PLLs may optionally be disabled for greater savings.
+
+### L1 Exit Protocol
+L1 exit can be initiated by either component. The exiting component drives EIEOS (Electrical Idle Exit Ordered Set), transitions through Recovery to re-establish Bit/Symbol Lock, and the Link returns to L0. Recommended: Downstream component sends FC Update DLLPs starting within 1 μs of L1 exit.
+
+### L2/L3 Ready Entry
+Similar to L1 but uses **PM_Enter_L23 DLLP** and is triggered by the PME_Turn_Off/PME_TO_Ack handshake. L2/L3 Ready is a staging point — the Link signals readiness for power removal. After the power manager removes main power, the Link transitions to L2 (if Vaux) or L3 (no Vaux). PM_Enter_L23 DLLPs are sent continuously until acknowledgment or power removal.
+
+> L1进入通过精确握手序列：PM配置写→PM_Enter_L1 DLLP→PM_Request_Ack→双向电气空闲。L1退出通过EIEOS+Recovery。L2/L3 Ready通过PM_Enter_L23 DLLP+PME_Turn_Off/TO_Ack握手，为断电暂存点。
 
 ---
 
 ## ASPM: Active State Power Management / 主动状态电源管理
 
-ASPM is a **hardware-autonomous** mechanism — no software involvement required once enabled. It allows the Link to enter L0s or L1 even when all Functions are in D0, based solely on idle conditions. ASPM significantly reduces power consumption during brief idle periods between transactions.
+ASPM is hardware-autonomous — devices in D0 can place idle Links into L0s or L1 without software involvement. Software only enables/disables ASPM through the **ASPM Control** field in Link Control Register (00b=Disabled, 01b=L0s only, 10b=L1 only, 11b=both).
 
-### ASPM Entry Conditions
+### L0s (Standby)
 
-- **L0s:** Transmitter has been idle (no TLPs or DLLPs pending) for a configurable period (implementation-specific, typically < 7 μs). Entry is per-direction and unilaterally decided.
-- **L1:** Downstream component requests L1 entry via PM_Active_State_Request_L1 DLLP. Upstream component may accept (PM_Request_Ack) or reject (PM_Active_State_Nak). Both directions must agree.
+**Entry conditions (per-direction, unilateral):**
+- Non-Switch Port: No TLP pending to transmit (or no FC credits available) AND no DLLPs pending.
+- Switch Upstream Port: All Downstream Port receive Lanes NOT in L0, Recovery, or Configuration AND no pending TLPs/DLLPs.
+- Idle period: implementation-specific, recommended not to exceed 7 μs.
 
-### ASPM Configuration
+**Exit:** Transmitter sends FTS (number based on N_FTS field exchanged during Configuration) followed by SKP Ordered Set, then resumes normal operation. Exit from L0s does NOT depend on FC credit availability — the Link must reach L0 to exchange credits.
 
-Software enables/disables ASPM through the **ASPM Control** field in the Link Control Register:
-- 00b = Disabled
-- 01b = L0s entry enabled
-- 10b = L1 entry enabled
-- 11b = L0s and L1 entry enabled
+### ASPM L1
 
-Software must read the **ASPM Support** field and L0s/L1 Exit Latency from the Link Capabilities Register before enabling ASPM. Endpoint Functions also report **Endpoint L0s/L1 Acceptable Latency** — the worst-case latency they can tolerate before risking internal FIFO overflow.
+**Entry:** Downstream component requests via **PM_Active_State_Request_L1 DLLP**. Upstream may accept (PM_Request_Ack) or reject (PM_Active_State_Nak TLP). Rejection does NOT prevent future attempts.
 
-> ASPM是硬件自主机制——使能后无需软件参与。即使所有Function在D0，链路空闲时也可进入L0s或L1。软件通过Link Control Register的ASPM Control字段使能/禁用。必须首先读取ASPM Support和Exit Latency，Endpoint报告可容忍的最坏情况延迟。
+**Conditions:** Port supports ASPM L1, no TLP scheduled, no Ack/Nak DLLP scheduled. Both Link partners must support ASPM L1.
 
----
+### ASPM Policy for Multi-Function Devices
 
-## L1 PM Substates: L1.1 and L1.2 / L1 PM子状态
+For non-ARI MFDs, ASPM policy = most active common denominator among all D0 Functions. Functions in non-D0 ignored. If any D0 Function has ASPM disabled, ASPM is disabled for the entire component. If one D0 Function enables L0s only and another enables L1 only → ASPM disabled.
 
-L1.1 and L1.2 are optional deeper substates of L1. Entry is always through L1.0, with additional conditions:
-- **L1.1:** Common-mode voltages maintained. Reference clock may be removed (via CLKREQ#). Lower power than L1.0.
-- **L1.2:** Common-mode voltages NOT required. Reference clock may be removed. Deepest idle power, longest exit latency.
+For ARI Devices, ASPM Control is determined solely by Function 0 regardless of its D-state.
 
-Both substates use the CLKREQ# sideband signal for exit: the component asserting CLKREQ# triggers the Link to wake. Entry and exit timing parameters (T_POWER_ON, T_COMMONMODE, LTR_L1.2_THRESHOLD) are configurable through the L1 PM Substates Extended Capability registers.
+### Software Flow
 
-> L1.1和L1.2是L1的可选更深子状态，始终通过L1.0进入。L1.1保持共模电压；L1.2不要求共模电压。两者均使用CLKREQ#边带信号退出。时序参数通过L1 PM Substates Extended Capability寄存器配置。
+1. Read ASPM Support field in Link Capabilities Register.
+2. Read L0s/L1 Exit Latency and Endpoint Acceptable Latency.
+3. Verify both Link partners support the desired level.
+4. Enable Upstream component BEFORE Downstream; disable Downstream BEFORE Upstream.
+
+> ASPM硬件自主——D0设备空闲时自动进入L0s/L1。L0s按方向独立进入≤7μs空闲。L1需PM_Active_State_Request_L1 DLLP握手。非ARI MFD策略取所有D0 Function最活跃共同分母。软件先使能上游后下游，先禁用下游后上游。
 
 ---
 
 ## The PME Mechanism / PME机制
 
-The Power Management Event (PME) mechanism allows a device to request a system wakeup from a low-power state. PCIe separates the PME task into two components:
+### PME Generation
 
-### 1. Link Wakeup (Reactivation)
+PME allows a Function to request a wakeup or PM state change. PME is broken into two tasks:
+1. **Link Wakeup (if Link is in L2):** Reactivate power and clocks via Beacon (in-band) or WAKE# (sideband).
+2. **Send PM_PME Message:** Posted TLP routed Upstream to Root Complex, identifying the request source via Requester ID.
 
-When a Link is in L2 (non-communicating), the device cannot send TLPs. It must first reactivate the Link using one of two wakeup mechanisms:
-- **Beacon:** In-band periodic signal sent on idle Lanes. Detected by the Upstream Port, which propagates the wakeup toward the Root Complex.
-- **WAKE#:** Sideband open-drain signal routed to the system power controller. Form-factor dependent.
+### Link Wakeup: Beacon vs WAKE#
 
-### 2. PM_PME Message
+**Beacon:** In-band periodic signal on idle Lanes. Detected by Upstream Port, propagated toward Root Complex. Switches connecting "Beacon domains" and "WAKE# domains" must translate appropriately.
 
-Once the Link is reactivated and trained to L0, the device sends a **PM_PME Message** (a Posted TLP) upstream to the Root Complex. The PM_PME Message contains the Requester ID, identifying which device needs service.
+**WAKE#:** Sideband open-drain signal asserted by components requesting wakeup. The asserting Function must continue driving WAKE# low until main power restored AND Fundamental Reset goes inactive.
 
-### PME Synchronization: PME_Turn_Off/PME_TO_Ack
+### PME Synchronization
 
-Before system sleep, the Root Complex broadcasts a **PME_Turn_Off Message** Downstream, instructing all devices to stop sending PM_PMEs and prepare for power removal. Each device responds with **PME_TO_Ack**. This handshake ensures that all in-flight PME Messages are flushed from the fabric before power is removed. A Switch aggregates PME_TO_Ack from all Downstream Ports and sends a single PME_TO_Ack Upstream.
+Before system sleep, the Root Complex broadcasts **PME_Turn_Off Message** Downstream. Each agent:
+1. Blocks further PM_PME transmission immediately upon receipt.
+2. Responds with **PME_TO_Ack** TLP routed Upstream.
+3. Prepares for power removal by initiating L2/L3 Ready transition.
 
-### PME Service Timeout
+Switches aggregate PME_TO_Ack from all Downstream Ports, then send a single PME_TO_Ack Upstream. Receipt of any TLP at the Upstream Port or removal of main power resets the aggregation.
 
-If a device's PME is not serviced within **100 ms (+50%/-5%)**, the device re-sends the PM_PME Message. This ensures that PMEs lost due to Root Complex buffer overflow are re-issued.
+**Deadlock Avoidance:** Power manager must implement a timeout (1-10 ms recommended). Must wait ≥100 ns after all Links enter L2/L3 Ready before removing power.
 
-> PME机制允许设备从低功耗状态请求系统唤醒。分两个组件：链路唤醒（Beacon带内或WAKE#边带）和PM_PME Message（Posted TLP向上游标识唤醒源）。睡眠前PME_Turn_Off/PME_TO_Ack握手确保所有在途PME被刷新。100ms服务超时确保丢失的PME被重发。
+### PM_PME Backpressure Deadlock Avoidance
+
+The Root Complex has limited PM_PME buffering. Deadlock scenario: PM_PMEs fill RC buffer → RC issues Configuration Read to PME requester's PMCSR → Completion must push all prior PM_PMEs ahead (ordering rules) but no buffer space → deadlock.
+
+**Solution:** RC must accept PM_PMEs up to FC credit limit and **discard** overflow. **PME Service Timeout** (100 ms +50%/-5%): if PME_Status not cleared, requester re-sends PM_PME.
+
+### PM_PME Delivery State Machine
+
+| State | Behavior |
+|-------|----------|
+| **Communicating** | Link up. PME_Status set → send PM_PME → PME Sent. PME_Turn_Off received → send PME_TO_Ack → Non-communicating. |
+| **Non-communicating** | Power/clock restored + reset → Communicating. PME_Status set → Link Reactivation + wakeup. |
+| **PME Sent** | PME_Status cleared → Communicating. Timeout → re-send PM_PME. PME_Turn_Off while PME_Status still set → PME_TO_Ack + wakeup. |
+| **Link Reactivation** | Power/clock restored + reset → clear wakeup → send PM_PME → PME Sent. |
+
+> PME生成分两组件：链路唤醒(Beacon/WAKE#)和PM_PME Message。睡眠前PME_Turn_Off/TO_Ack握手。RC缓冲溢出时丢弃PM_PME，100ms超时重发。PME状态机四个状态：通信中→PME已发送→非通信中→链路重激活。
 
 ---
 
 ## Auxiliary Power (Vaux) / 辅助电源
 
-Vaux provides power to a component when its main power rails are off (L2 or D3<sub>Cold</sub>). Only devices that need to support wakeup from these states require Vaux. A device may only consume auxiliary power if enabled to do so by software (PME_En bit in PMCSR, or Aux Power PM Enable bit in Device Control Register). Vaux power is limited — typical budget is 375 mA at 3.3V.
+Vaux powers wakeup logic when main power rails are off (L2, D3<sub>Cold</sub>). A device may only consume auxiliary power if software has enabled it through:
+- **PME_En bit** in PMCSR
+- **Aux Power PM Enable bit** in Device Control Register
 
-> Vaux在主电源轨关闭(L2或D3<sub>Cold</sub>)时为组件供电。设备仅在软件使能后才可消耗辅助电源。典型预算为3.3V 375mA。
+Software must enable auxiliary power consumption in ALL components participating in Link wakeup, including those propagating Beacon. Legacy platform firmware is responsible for enabling auxiliary power in the absence of ACPI-aware OS support.
+
+For PME from D3<sub>Cold</sub>, the PME context (PME_Status, Requester ID, and any additional device-specific context) must be preserved using Vaux.
+
+> Vaux在主电源关闭时为唤醒逻辑供电。仅PME_En或Aux Power PM Enable使能后可消耗。必须使能所有参与链路唤醒的组件。PME上下文在D3<sub>Cold</sub>下需Vaux保存。
 
 ---
 
-## Software Flow for PM Transitions / PM转换的软件流程
+## Power Management Software Flow / 电源管理软件流程
 
-### Entering a Low-Power State
+### Entering System Sleep (S3/S4)
 
-1. Device driver saves functional state and quiesces the device (completes/terminates all outstanding transactions)
-2. System PM software writes to the Function's PMCSR PowerState field to transition to the target D-state
-3. The Downstream component initiates Link state transition (L1 for D1-D3<sub>Hot</sub>)
-4. If entering system sleep (S3/S4), the Root Complex broadcasts PME_Turn_Off, waits for PME_TO_Ack, then signals the power controller to remove main power
+1. OS PM software notifies drivers of impending sleep.
+2. Each driver saves device state, quiesces the device, terminates outstanding transactions.
+3. System PM software writes each Function's PMCSR to D3<sub>Hot</sub>.
+4. Downstream components initiate L1 entry via PM_Enter_L1 DLLPs.
+5. Root Complex broadcasts PME_Turn_Off.
+6. Each device responds with PME_TO_Ack, initiates L2/L3 Ready via PM_Enter_L23.
+7. When all Root Ports observe their Links in L2/L3 Ready, power manager removes main power and reference clocks (after ≥100 ns wait).
 
-### Resuming from a Low-Power State
+### Resuming from Sleep
 
-1. Wakeup event (Beacon, WAKE#, or user action) triggers power controller to restore main power and reference clocks
-2. Fundamental Reset de-asserted; Link trains through Detect/Polling/Configuration to L0
-3. System PM software writes to PMCSR to transition Function to D0
-4. After recovery time (10 ms for D3<sub>Hot</sub>→D0, 200 μs for D2→D0), driver restores functional state
+1. Wake event (power button, WAKE#, Beacon, RTC alarm) triggers power manager.
+2. Main power and reference clocks restored.
+3. Fundamental Reset de-asserted (PERST# goes inactive).
+4. Link trains through Detect→Polling→Configuration→L0.
+5. If waking from L2: PME-capable device sends PM_PME Message to RC.
+6. OS PM service routine identifies wake source, clears PME_Status.
+7. PM software writes PMCSR to transition Functions to D0.
+8. After recovery time (10 ms for D3<sub>Hot</sub>→D0), drivers restore device state and resume operation.
 
-> 进入低功耗：驱动保存状态停止设备→PM软件写PMCSR→下游组件发起链路转换→PME_Turn_Off握手。恢复：唤醒事件→电源恢复→基本复位取消→链路训练到L0→PM软件写D0→恢复时间后驱动恢复状态。
+> 系统睡眠流程：OS通知驱动→保存状态→写D3<sub>Hot</sub>→L1进入→PME_Turn_Off广播→PME_TO_Ack→L2/L3 Ready→断电。唤醒流程：唤醒事件→电源恢复→基本复位→链路训练→PM_PME→OS识别唤醒源→写D0→恢复时间后驱动恢复。
+
+---
+
+## SR-IOV Power Management / SR-IOV电源管理
+
+- **PF:** Full PM support. PF D-state controls Link Power State.
+- **VF:** Must support D0 and D3<sub>Hot</sub> (D1/D2 optional). VF D-states do NOT affect Link state. VF PM capability is simplified.
+- PF driver responsible for quiescing VF transactions before changing PF D-state or Link state.
+
+---
+
+## Bridges and Power Management / 桥与电源管理
+
+When a Type 1 Function (virtual bridge) is in a non-D0 state:
+- All Memory and I/O Requests flowing Downstream → Unsupported Request.
+- Type 1 Configuration Requests → Unsupported Request.
+- Type 0 Configuration Requests → unaffected.
+- Completions in either direction → unaffected.
+- Message handling → unaffected by virtual bridge D-state.
+
+Switches: Upstream Port D-state must be at least as active as the most active Downstream Port.
+
+> SR-IOV：PF控制链路，VF D状态不影响链路。桥在非D0时终止所有Mem/IO和Type 1配置请求，但Completion和Message不受影响。Switch Upstream Port D状态必须不低于最活跃的Downstream Port。

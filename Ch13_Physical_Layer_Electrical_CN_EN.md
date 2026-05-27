@@ -2,125 +2,126 @@
 # 第13章：物理层——电气子层
 
 > 中英文对照翻译 | Chinese-English Parallel Translation
-> Source: MindShare PCI Express Technology 3.0 | Pages: 506–560 (55 pages)
+> Source: MindShare PCI Express Technology 3.0 — Pages: 506–560 (55 pages)
 
 ---
 
 ## Overview / 概述
 
-The Electrical sub-block of the Physical Layer defines the analog characteristics of PCIe transmitters and receivers, including voltage levels, jitter budgets, rise/fall times, return loss, and the physical channel (PCB traces, connectors, cables). This chapter covers Gen1, Gen2, and Gen3 electrical parameters.
+The Electrical sub-block of the Physical Layer defines the analog characteristics of PCIe transmitters and receivers — voltage levels, jitter budgets, rise/fall times, return loss, and the physical channel. This chapter covers Gen1 (2.5 GT/s), Gen2 (5.0 GT/s), and Gen3 (8.0 GT/s) electrical parameters.
 
-> 物理层的电气子层定义PCIe发送端和接收端的模拟特性，包括电压水平、抖动预算、上升/下降时间、回波损耗和物理信道（PCB走线、连接器、线缆）。本章涵盖Gen1、Gen2和Gen3电气参数。
+> 物理层电气子层定义PCIe发送端和接收端的模拟特性——电压水平、抖动预算、上升/下降时间、回波损耗和物理信道。本章涵盖Gen1/2/3电气参数。
 
 ---
 
 ## Differential Signaling / 差分信令
 
-PCIe uses differential signaling on each Lane: two wires carrying equal and opposite signals (D+ and D−). Benefits: common-mode noise rejection, reduced EMI (the opposite fields cancel), and the ability to detect a signal even at very low amplitudes. The differential peak-to-peak voltage at the transmitter is typically 800-1200 mV for Gen1/Gen2.
+PCIe uses differential signaling on each Lane — two wires (D+ and D−) carrying equal and opposite signals. Benefits: common-mode noise rejection (interference affects both wires equally and is canceled), reduced EMI (opposite fields cancel), and ability to detect signals at very low amplitudes. The differential peak-to-peak voltage at the transmitter is 800-1200 mV for Gen1/Gen2.
 
-> PCIe在每条通道上使用差分信令：两条线承载相等且相反的信号(D+和D−)。优势：共模噪声抑制、减少EMI（相反场抵消）、即使在极低幅度下也能检测信号。Gen1/Gen2发送端差分峰峰值电压通常为800-1200 mV。
+> PCIe使用差分信令——两根线(D+和D−)承载相等且相反的信号。优势：共模噪声抑制(干扰同等地影响两根线并被抵消)、减少EMI(相反场抵消)、极低幅度下也能检测信号。Gen1/Gen2发送端差分峰峰值电压800-1200 mV。
 
 ---
 
 ## AC Coupling / 交流耦合
 
-PCIe Links are AC-coupled: capacitors (typically 75-200 nF) are placed in series on each differential pair to block DC. This allows the transmitter and receiver to operate at different common-mode voltages. The capacitors must be located on the transmitter side for add-in cards and on the receiver side for system boards.
+PCIe Links are AC-coupled through series capacitors (75-200 nF) on each differential pair. The capacitors block DC, allowing transmitter and receiver to operate at different common-mode voltages — essential when devices from different vendors with different silicon processes are connected. Placement: transmitter side for add-in cards, receiver side for system boards.
 
-> PCIe链路为交流耦合：在每个差分对上串联电容（通常75-200 nF）以隔离直流。这允许发送端和接收端以不同的共模电压运行。电容必须位于扩展卡发送端侧和系统板接收端侧。
+> PCIe链路通过差分对上串联电容(75-200nF)交流耦合。电容阻隔直流，允许发送端和接收端以不同共模电压运行。放置：扩展卡发送端侧，系统板接收端侧。
 
 ---
 
-## Gen1/Gen2 Electrical Parameters / Gen1/Gen2电气参数
+## Key Electrical Parameters / 关键电气参数
 
-| Parameter | Gen1 (2.5 GT/s) | Gen2 (5.0 GT/s) |
-|-----------|-----------------|------------------|
-| Unit Interval (UI) | 400 ps | 200 ps |
-| Differential TX Voltage | 800-1200 mVpp | 800-1200 mVpp |
-| TX Rise/Fall Time | 0.125 UI min | 0.125 UI min |
-| TX Total Jitter | 0.25 UI max | 0.25 UI max |
-| RX Total Jitter Tolerance | 0.55 UI | 0.55 UI |
-| Differential Return Loss | ≥ 10 dB | ≥ 10 dB |
-
-> | 参数 | Gen1 (2.5 GT/s) | Gen2 (5.0 GT/s) |
-> |------|-----------------|------------------|
-> | 单位间隔(UI) | 400 ps | 200 ps |
-> | 差分TX电压 | 800-1200 mVpp | 800-1200 mVpp |
-> | TX上升/下降时间 | ≥0.125 UI | ≥0.125 UI |
-> | TX总抖动 | ≤0.25 UI | ≤0.25 UI |
-> | RX总抖动容限 | 0.55 UI | 0.55 UI |
-> | 差分回波损耗 | ≥10 dB | ≥10 dB |
+| Parameter | Gen1 (2.5 GT/s) | Gen2 (5.0 GT/s) | Gen3 (8.0 GT/s) |
+|-----------|:---:|:---:|:---:|
+| Unit Interval (UI) | 400 ps | 200 ps | 125 ps |
+| TX Differential Voltage | 800-1200 mVpp | 800-1200 mVpp | ≤1300 mVpp |
+| TX Rise/Fall Time | ≥0.125 UI | ≥0.125 UI | ≥0.15 UI |
+| TX Random Jitter (RJ) | ≤0.15 UI | ≤0.15 UI | ≤0.15 UI |
+| TX Total Jitter (TJ) | ≤0.25 UI | ≤0.25 UI | ≤0.28 UI |
+| Differential Return Loss | ≥10 dB | ≥10 dB | ≥10 dB |
+| Common-Mode Return Loss | ≥6 dB | ≥6 dB | ≥6 dB |
 
 ---
 
 ## De-emphasis (Gen2) / 去加重
 
-At 5.0 GT/s, signal degradation due to channel losses becomes significant. **De-emphasis** reduces the amplitude of subsequent bits after a transition, pre-compensating for the low-pass filtering effect of the channel. Gen2 specifies -3.5 dB de-emphasis: the voltage of non-transition bits is reduced by 3.5 dB relative to transition bits. The receiver can be tuned to expect this de-emphasis level.
+At 5.0 GT/s, signal degradation from channel losses becomes significant. **De-emphasis** reduces the amplitude of non-transition bits relative to transition bits by −3.5 dB, pre-compensating for the low-pass filtering effect of the channel. The transition bit is transmitted at full amplitude; subsequent identical bits at reduced amplitude. The receiver's CTLE (Continuous Time Linear Equalizer) is designed to expect this de-emphasis level.
 
-> 5.0 GT/s下信道损耗导致的信号退化变得显著。**去加重**降低跳变后后续位的幅度，预补偿信道的低通滤波效应。Gen2指定-3.5 dB去加重：非跳变位电压相对跳变位降低3.5 dB。接收端可调谐以期望此去加重水平。
+> 5.0 GT/s下信道损耗导致的信号退化显著。去加重将非跳变位幅度相对跳变位降低−3.5 dB，预补偿信道低通滤波效应。跳变位以全幅度发送；后续相同位以降幅发送。接收端CTLE设计为期望此去加重水平。
 
 ---
 
 ## Equalization (Gen3) / 均衡
 
-At 8.0 GT/s, simple de-emphasis is insufficient. Gen3 introduces full transmitter equalization with programmable coefficients:
-- **Pre-cursor (C-1):** Adjusts the signal before the main transition to pre-compensate for ISI
-- **Main cursor (C0):** The primary signal level
-- **Post-cursor (C+1):** Adjusts the signal after the main transition to compensate for reflections and tail effects
+At 8.0 GT/s (Nyquist = 4 GHz), simple de-emphasis is insufficient for practical channel lengths. Gen3 introduces full transmitter equalization:
 
-The coefficients are negotiated during Recovery.Equalization using the EQ Info fields in TS1/TS2 blocks. Multiple presets are defined for common channel characteristics, with the ability to fine-tune via coefficient requests.
+- **Pre-cursor (C−1):** Adjusts signal before main transition to pre-compensate for ISI from previous bits
+- **Main cursor (C0):** Normalized to 1.0 — the primary signal level
+- **Post-cursor (C+1):** Adjusts signal after transition to compensate for reflections and tail effects
 
-> 8.0 GT/s下简单去加重不足够。Gen3引入带可编程系数的全发送端均衡：前标(C-1)预补偿ISI；主标(C0)主信号水平；后标(C+1)补偿反射和尾部效应。系数在Recovery.Equalization期间使用TS1/TS2块中的EQ Info字段协商。多个预设针对常见信道特性定义，可通过系数请求微调。
+Multiple **presets** define common coefficient sets for short, medium, and long channels. The coefficients are fine-tuned during the **Recovery.Equalization** 4-phase process (Phase 0-3) using EQ Info fields in TS1/TS2 blocks. Each phase allows coefficient requests (±1 increment) and evaluations.
+
+> 8.0 GT/s(Nyquist=4 GHz)下去加重不足。Gen3引入全发送端均衡：前标预补偿先前位ISI、主标归一化1.0、后标补偿反射。多个预设定义常见系数集。系数在Recovery.Equalization四阶段过程中通过TS1/TS2块EQ Info字段微调。
 
 ---
 
 ## Receiver Characteristics / 接收端特性
 
-The receiver must reliably extract data from a signal degraded by channel losses, reflections, crosstalk, and jitter. Key receiver requirements:
-- **Continuous Time Linear Equalizer (CTLE):** Amplifies high-frequency components to compensate for channel roll-off
-- **Decision Feedback Equalizer (DFE) (optional, Gen3):** Uses previously detected bits to cancel ISI on the current bit
-- **Clock and Data Recovery (CDR):** Extracts a sampling clock from the incoming data stream
-- **Jitter tolerance:** Must handle the transmitter's jitter plus channel-induced jitter
+**CTLE (Continuous Time Linear Equalizer):** Amplifies high frequencies to compensate for channel low-pass characteristic. Adjustable gain to match channel loss.
 
-> 接收端必须从因信道损耗、反射、串扰和抖动而降质的信号中可靠提取数据。关键要求：CTLE放大高频分量补偿信道衰减；DFE(Gen3可选)用先前检测的位消除当前位的ISI；CDR从输入数据流提取采样时钟；抖动容限必须处理发送端加信道引入的抖动。
+**DFE (Decision Feedback Equalizer, optional for Gen3):** Uses previously detected bits to cancel ISI on the current bit via feedback. Non-linear — requires correct prior decisions.
+
+**CDR (Clock and Data Recovery):** Extracts sampling clock from incoming data stream. Uses phase interpolator or PLL-based architecture tracking data edges. Must operate reliably down to minimum signal amplitude.
+
+> CTLE放大高频补偿信道低通特性。DFE(Gen3可选)使用先前检测的位通过反馈消除当前位ISI。CDR从输入数据流提取采样时钟跟踪数据边沿。
 
 ---
 
 ## Jitter Budget / 抖动预算
 
-The total jitter budget is divided among the transmitter, channel (interconnect), and receiver. At Gen3 speeds, jitter margins are tighter because the UI is only 125 ps. The system design must ensure that total jitter at the receiver does not exceed 0.55 UI for Gen1/Gen2 and a tighter spec for Gen3. Jitter components include:
-- **Random Jitter (RJ):** Gaussian, unbounded, caused by thermal noise
-- **Deterministic Jitter (DJ):** Bounded, caused by ISI, duty-cycle distortion, crosstalk
-- **Total Jitter (TJ) at BER 10^-12:** TJ = DJ + 14.069 × RJ (for Gen1/Gen2)
+Total jitter is divided among transmitter, channel, and receiver. At Gen3 (125 ps UI), jitter margins are tightest.
 
-> 总抖动预算在发送端、信道（互连）和接收端之间分配。Gen3速度下抖动裕量更紧，因为UI仅为125 ps。抖动分量包括：随机抖动(RJ)为高斯无界抖动由热噪声引起；确定性抖动(DJ)为有界抖动由ISI、占空比失真、串扰引起；总抖动(TJ)=DJ+14.069×RJ(Gen1/Gen2)。
+Jitter components:
+- **RJ (Random Jitter):** Gaussian, unbounded, thermal noise origin. Measured as RMS and extrapolated to BER.
+- **DJ (Deterministic Jitter):** Bounded — ISI, duty-cycle distortion (DCD), crosstalk.
+- **TJ at BER 10^−12:** TJ = DJ + Q_BER × RJ (where Q_BER ≈ 14.069 for 10^−12)
+
+> 总抖动在发送端、信道和接收端间分配。Gen3(125ps UI)下抖动裕量最紧。RJ(高斯无界热噪声)和DJ(有界ISI/DCD/串扰)。TJ=DJ+14.069×RJ(BER 10^−12)。
 
 ---
 
 ## The Physical Channel / 物理信道
 
-The PCIe channel consists of PCB traces, vias, connectors, and possibly cables. Key channel parameters:
-- **Insertion Loss:** Signal attenuation vs frequency. At Gen3 Nyquist (4 GHz), typical loss is 15-25 dB for a reasonable channel length
-- **Return Loss:** Signal energy reflected back due to impedance discontinuities. Minimum 10 dB for Gen1/Gen2
-- **Crosstalk:** Unwanted coupling between adjacent Lanes. Must be below specified limits
+The PCIe channel consists of PCB traces, vias, connectors, and optional cables. Channel reach decreases as data rate increases due to frequency-dependent dielectric and skin-effect losses:
 
-Channel reach decreases as data rate increases. Gen1 can typically drive 20+ inches of FR4; Gen2 ~15 inches; Gen3 ~10 inches (with equalization).
+- Gen1 (1.25 GHz Nyquist): 20+ inches FR4 typical
+- Gen2 (2.5 GHz Nyquist): ~15 inches typical
+- Gen3 (4 GHz Nyquist): ~10 inches typical with equalization
 
-> PCIe信道由PCB走线、过孔、连接器和可能的线缆组成。关键参数：插入损耗(信号衰减vs频率)，Gen3 Nyquist(4 GHz)典型损耗15-25 dB；回波损耗(阻抗不连续反射的能量)，Gen1/Gen2 ≥10 dB；串扰(相邻通道间不期望的耦合)。随数据速率增加信道延伸减少：Gen1~20+英寸FR4，Gen2~15英寸，Gen3~10英寸(使用均衡)。
+**Key Channel Parameters:**
+- **Insertion Loss (S21):** Signal attenuation vs frequency. At Nyquist, Gen3 channels may have 15-25 dB loss
+- **Return Loss (S11):** Energy reflected at impedance discontinuities. ≥10 dB required
+- **Crosstalk:** Near-end (NEXT) and far-end (FEXT) coupling between adjacent Lanes
+
+> PCIe信道由PCB走线、过孔、连接器和线缆组成。信道延伸随数据速率增加而减少。Gen1 20+英寸FR4、Gen2约15英寸、Gen3约10英寸(需均衡)。关键参数：插入损耗S21、回波损耗S11≥10dB、串扰NEXT/FEXT。
 
 ---
 
 ## Spread Spectrum Clocking (SSC) / 展频时钟
 
-SSC modulates the reference clock frequency by typically 0.5% down-spread at 30-33 kHz. This reduces EMI peak amplitude by spreading the clock energy over a wider frequency band. PCIe supports SSC but requires that both ends of a Link be configured consistently (common clock with SSC or separate clocks without SSC).
+SSC modulates the reference clock by typically 0.5% down-spread (frequency reduced by 0.5%) at 30-33 kHz modulation rate. Reduces EMI peak amplitude by spreading energy across a wider band. Both Link partners must be configured consistently — either common clock with SSC or separate clocks without SSC. SSC must be disabled during Compliance testing.
 
-> SSC通常以30-33 kHz、0.5%向下展频调制参考时钟频率。通过在更宽频带上展布时钟能量降低EMI峰值。PCIe支持SSC但要求链路两端一致配置（公共时钟带SSC或独立时钟不带SSC）。
+> SSC以30-33kHz调制速率、0.5%向下展频调制参考时钟，通过展布能量到更宽频带降低EMI峰值。链路两端必须一致配置。
 
 ---
 
 ## Low-Power Electrical States / 低功耗电气状态
 
-- **Electrical Idle:** Differential voltage < 20 mVpp. Transmitter drivers are in high-impedance state. The receiver must detect exit (voltage rising above threshold) reliably.
-- **L0s/L1:** Transmitter in Electrical Idle. PLLs may remain active (L0s) or may be disabled (L1).
-- **Beacon:** Periodic signal on idle Lanes for L2 wakeup. Must be detectable even with significant signal attenuation.
+**Electrical Idle:** Differential voltage < 20 mVpp. Transmitter in high-impedance state. Receiver must detect exit (voltage > threshold) reliably.
 
-> 电气空闲(差分电压<20mVpp，发送端驱动器高阻态)；L0s/L1(发送端电气空闲)；Beacon(L2唤醒的周期信号，即使信号显著衰减也必须可检测)。
+**L0s/L1:** Transmitter enters Electrical Idle after sending EIOS (Gen1/Gen2) or EIOS+EIEOS (Gen3). PLLs may remain active (L0s) or be disabled (L1).
+
+**Beacon:** Periodic signal on idle Lanes (L2) for wakeup. Must be detectable through significant channel attenuation. Defined as a burst of specific symbols with a defined repetition rate.
+
+> 电气空闲(<20mVpp差分电压发送端高阻态)。L0s/L1发送端在EIOS后进入电气空闲。Beacon(L2唤醒)在空闲通道上周期性信号，必须可在显著信道衰减下检测。

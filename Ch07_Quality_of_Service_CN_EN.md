@@ -2,89 +2,92 @@
 # 第7章：服务质量 (QoS)
 
 > 中英文对照翻译 | Chinese-English Parallel Translation
-> Source: MindShare PCI Express Technology 3.0 | Pages: 304–341 (38 pages)
+> Source: MindShare PCI Express Technology 3.0 — Pages: 304–344 (41 pages)
 
 ---
 
-## QoS Concept / 服务质量概念
+## QoS Overview / 服务质量概述
 
-Quality of Service (QoS) in PCIe provides differentiated treatment of traffic flows, ensuring that high-priority traffic (e.g., isochronous audio/video data) is not blocked or excessively delayed by lower-priority traffic (e.g., bulk storage transfers). Without QoS, all TLPs share the same queues and ordering rules — a single congested flow can degrade performance for all traffic on the Link.
+Quality of Service (QoS) in PCIe provides differentiated treatment of traffic flows, ensuring high-priority traffic is not blocked or excessively delayed by lower-priority traffic. Without QoS, all TLPs share the same queues and a single congested flow can degrade performance for all traffic on the Link.
 
-> PCIe中的服务质量提供差异化流量处理，确保高优先级流量（如等时音频/视频数据）不被低优先级流量（如大容量存储传输）阻塞或过度延迟。无QoS时所有TLP共享相同队列和排序规则——单个拥塞流可降低链路上所有流量的性能。
+> PCIe中的服务质量提供差异化流量处理，确保高优先级流量不被低优先级流量阻塞或过度延迟。无QoS时所有TLP共享相同队列，单个拥塞流可降低所有流量性能。
 
-QoS is implemented through two orthogonal mechanisms:
-1. **Traffic Classes (TC):** Labels on TLPs that identify their QoS requirements
-2. **Virtual Channels (VC):** Independent buffer and flow control resources that provide physical separation of traffic
+QoS is implemented through two orthogonal mechanisms: **Traffic Classes (TC)** — labels on TLPs identifying QoS requirements — and **Virtual Channels (VC)** — independent buffer and flow control resources providing physical separation.
 
-> QoS通过两个正交机制实现：流量类别(TC)——TLP上标识QoS需求的标签；虚拟通道(VC)——独立的缓冲和流控资源，提供流量的物理分离。
+> QoS通过两个正交机制实现：流量类别(TC)——TLP上标识QoS需求的标签；虚拟通道(VC)——独立缓冲和流控资源提供物理分离。
 
 ---
 
 ## Traffic Classes (TC0-TC7) / 流量类别
 
-Each TLP carries a 3-bit **Traffic Class (TC)** field in its header, allowing the Requester to assign one of eight priority levels (TC0-TC7). TC0 is the default — all TLPs must use TC0 unless TC/VC mapping is configured. The TC label travels with the TLP through the entire PCIe fabric.
+Each TLP carries a 3-bit TC field in its header (offset within the TLP header), allowing assignment of one of eight priority levels. **TC0 is the default** — all TLPs must use TC0 unless TC/VC mapping is configured. The TC label travels with the TLP through the entire PCIe fabric — every Switch and the Root Complex respect the assigned TC.
 
-> 每个TLP在其头部携带3位**Traffic Class (TC)**字段，允许请求者分配8个优先级之一(TC0-TC7)。TC0为默认——除非配置了TC/VC映射，所有TLP必须使用TC0。TC标签随TLP穿越整个PCIe结构。
+> 每个TLP头部携带3位TC字段，可分配8个优先级之一。TC0为默认——除非配了TC/VC映射，所有TLP必须使用TC0。TC标签随TLP穿越整个PCIe结构。
 
-TC assignment is determined by the device driver or hardware based on the nature of the transaction. For example: TC0 for bulk data, TC1 for control messages, TC2 for isochronous streaming. However, PCIe does NOT specify which TC should be used for which purpose — that is defined by the system software or the device-specific usage model.
+TC assignment is determined by device driver or hardware based on transaction nature. A typical assignment might be: TC0 for bulk data, TC1 for control, TC2 for isochronous streaming. However, PCIe does NOT specify which TC maps to which purpose — that is defined by system software or device-specific usage models. This flexibility allows different system designs to optimize TC assignments for their specific workloads.
 
-> TC分配由设备驱动或硬件根据事务性质决定。例如TC0用于批量数据、TC1用于控制消息、TC2用于等时流。但PCIe不规定哪种TC应用于哪种目的——这由系统软件或设备特定使用模型定义。
+> TC分配由设备驱动或硬件根据事务性质决定。PCIe不规定哪种TC用于哪种目的——由系统软件或设备特定使用模型定义。这种灵活性允许不同系统设计针对其特定工作负载优化TC分配。
 
 ---
 
 ## Virtual Channels (VC0-VC7) / 虚拟通道
 
-Each Virtual Channel provides an independent set of FC buffers, ordering queues, and arbitration logic. VC0 is the default — it must always be present and carries all traffic before VC configuration. Up to 8 VCs (VC0-VC7) can be configured on a Link.
+Each Virtual Channel provides an independent set of FC buffers (for all six credit types), independent ordering queues, and independent arbitration logic. **VC0 is the mandatory default** — it must always be present. VC0 carries all traffic before VC configuration and any traffic whose TC is not explicitly mapped to another VC.
 
-> 每个虚拟通道提供独立的FC缓冲集、排序列和仲裁逻辑。VC0为默认——它必须始终存在并承载VC配置前的所有流量。链路上最多可配置8个VC(VC0-VC7)。
+> 每个虚拟通道提供独立的FC缓冲(全部六种信用类型)、独立排序列和独立仲裁逻辑。VC0是强制默认——VC配置前承载所有流量，未显式映射到其他VC的TC流量也走VC0。
 
-The VC mechanism provides **physical separation** — a TLP on VC1 uses VC1's flow control credits and does not consume VC0's credits. This means a blocked VC (e.g., its receiver buffer is full) does not affect traffic on other VCs. This is the fundamental value proposition of VCs: head-of-line blocking elimination.
+The VC mechanism provides **physical separation**: a TLP on VC1 consumes VC1's flow control credits, not VC0's. A blocked VC (full receiver buffer) does NOT affect traffic on other VCs. This is the fundamental value of VCs — head-of-line blocking elimination. If VC1's buffer is full (waiting for the application to consume Completions), VC0 traffic continues unimpeded.
 
-> VC机制提供物理分离——VC1上的TLP使用VC1的流控信用，不消耗VC0的信用。这意味着被阻塞的VC（如接收缓冲满）不影响其他VC上的流量。这是VC的根本价值主张：消除头阻塞。
+> VC机制提供物理分离：VC1上的TLP消耗VC1的流控信用，不消耗VC0。被阻塞的VC不影响其他VC流量——消除头阻塞的根本价值。若VC1缓冲满，VC0流量不受影响。
+
+The number of VCs a device supports is reported through the VC Extended Capability structure (ECAP ID 0002h or 0009h). Software enables only the intersection of VCs supported by both Link partners.
 
 ---
 
 ## TC/VC Mapping / TC到VC映射
 
-Software configures the TC/VC mapping through the VC Extended Capability structure (see Chapter 7 of the PCIe spec for register details). The mapping assigns each TC to one VC. Multiple TCs can map to the same VC (consolidation) or each TC can map to its own VC (separation). Unmapped TCs default to VC0.
+Software configures TC/VC mapping through the VC Extended Capability registers. The mapping assigns each TC to one VC. Multiple TCs can map to the same VC (consolidation for similar-priority traffic) or each TC can map to its own VC (separation for strict QoS). Unmapped TCs default to VC0.
 
-> 软件通过VC Extended Capability结构配置TC/VC映射。映射将每个TC分配给一个VC。多个TC可映射到同一VC（合并）或每个TC映射到自己的VC（分离）。未映射的TC默认到VC0。
+> 软件通过VC Extended Capability寄存器配置TC/VC映射。多个TC可合并到同一VC或每个TC映射到自己的VC。未映射TC默认到VC0。
 
-Example mapping: TC0 → VC0 (default traffic), TC1-TC3 → VC0 (consolidated bulk), TC4 → VC1 (isochronous), TC5-TC6 → VC2 (control), TC7 → VC3 (management). The optimal mapping depends on the traffic mix and the number of VCs the hardware supports.
+Example: TC0→VC0 (default bulk), TC1-3→VC0 (consolidated), TC4→VC1 (isochronous), TC5-6→VC2 (control), TC7→VC3 (management). The optimal mapping depends on traffic mix, available VCs, and performance requirements.
 
-> 映射示例：TC0→VC0（默认）、TC1-TC3→VC0（合并批量）、TC4→VC1（等时）、TC5-TC6→VC2（控制）、TC7→VC3（管理）。最佳映射取决于流量组合和硬件支持的VC数量。
+> 映射示例：TC0-3→VC0合并，TC4→VC1等时，TC5-6→VC2控制，TC7→VC3管理。最佳映射取决于流量组合、可用VC和性能需求。
 
 ---
 
 ## VC Arbitration / VC仲裁
 
-When multiple VCs have packets ready to transmit, the port must decide which VC gets the Link bandwidth. Two arbitration schemes are defined:
+When multiple VCs have packets ready, the port must decide which VC transmits next. Two arbitration schemes are defined:
 
-**Strict Priority:** Each VC is assigned a priority level. When a higher-priority VC has a packet, it always wins over lower-priority VCs. This provides strong QoS guarantees but can starve low-priority VCs.
+**Strict Priority Arbitration:** Each VC assigned a priority level (0-7, 7=highest). Higher-priority VC always wins. Provides strong QoS guarantees but can starve lower-priority VCs if higher-priority traffic is continuous. Best for isochronous traffic that requires guaranteed bounded latency.
 
-**Round-Robin (or Weighted Round-Robin):** VCs are serviced in a cyclic order, optionally with weights that allocate proportional bandwidth. This provides fairness and prevents starvation.
+**Round-Robin Arbitration (RR) / Weighted Round-Robin (WRR):** VCs serviced in cyclic order. WRR adds programmable weights allocating proportional bandwidth (e.g., VC0: 50%, VC1: 30%, VC2: 20%). Prevents starvation. Best for fair sharing among multiple data flows.
 
-> 当多个VC有数据包就绪时，端口必须决定哪个VC获得链路带宽。两种仲裁方案：严格优先级（高优先级VC总是获胜，提供强QoS保证但可能饿死低优先级VC）；轮询/加权轮询（VC以循环顺序服务，可选加权分配比例带宽，提供公平性并防止饥饿）。
+> 严格优先级——高优先级VC总是获胜，提供强QoS保证但可能饿死低优先级。轮询/加权轮询——VC按循环顺序服务，加权分配比例带宽(如50%/30%/20%)，防止饥饿。
 
-Arbitration is configurable per VC through the VC Resource Control register. The arbitration table can be programmed to implement arbitrary service policies.
+Arbitration is configured per VC through the **VC Resource Control Register** and the **Port Arbitration Table**. The table specifies the arbitration scheme and the weights/priority for each VC phase. Arbitration runs at the Physical Layer — as symbols/blocks are serialized onto the Link, the arbitration logic selects which VC's next chunk is transmitted.
 
-> 仲裁可通过VC Resource Control寄存器按VC配置。仲裁表可编程实现任意服务策略。
+> 仲裁通过VC Resource Control Register和Port Arbitration Table按VC配置。表指定仲裁方案和每VC阶段的权重/优先级。仲裁在物理层运行。
 
 ---
 
 ## Isochronous Support / 等时支持
 
-Isochronous traffic requires guaranteed bandwidth and bounded latency — critical for audio/video streaming, real-time control, and sensor data. PCIe supports isochronous contracts through:
-1. TC/VC mapping to isolate isochronous traffic on its own VC
-2. Strict priority or weighted arbitration for the isochronous VC
-3. The Isochronous Virtual Channel Extended Capability
+Isochronous traffic requires guaranteed bandwidth and bounded latency — essential for audio/video streaming, real-time control, and sensor data. PCIe supports isochronous contracts through:
 
-> 等时流量需保证带宽和有界延迟——对音频/视频流、实时控制和传感器数据至关重要。PCIe通过隔离等时流量到其自己的VC、为等时VC设置严格优先级或加权仲裁以及Isochronous Virtual Channel Extended Capability支持等时合约。
+1. **Isolation:** Isochronous traffic on a dedicated VC with strict priority arbitration
+2. **Bandwidth Reservation:** The Isochronous Virtual Channel Extended Capability to negotiate and enforce bandwidth contracts
+3. **Bounded Latency:** Strict priority ensures isochronous packets bypass lower-priority bulk traffic
+
+The Isochronous VC capability is typically used in embedded and consumer electronics applications (set-top boxes, automotive, medical imaging) where deterministic latency is critical.
+
+> 等时流量需保证带宽和有界延迟——对音频/视频流、实时控制、传感器数据至关重要。PCIe通过隔离到专用VC+严格优先级仲裁、带宽预留的Isochronous VC Extended Capability以及严格优先级确保等时包超越低优先级批量流量来支持。
 
 ---
 
 ## QoS and Flow Control Interaction / QoS与流控交互
 
-Since each VC has independent flow control, credit starvation on one VC does not affect others. This is the key advantage over a single-queue model. However, the total Link bandwidth is shared among VCs — arbitration determines the share each VC receives.
+Since each VC has independent FC buffers, credit starvation on one VC cannot block traffic on other VCs. However, total Link bandwidth is shared — arbitration determines each VC's share, and sustained high utilization on one VC can reduce available bandwidth for others. This interplay between FC (buffer management per VC) and arbitration (bandwidth allocation per VC) is the core of PCIe QoS design.
 
-> 由于每个VC有独立流控，一个VC上的信用饥饿不影响其他VC。这是相对单队列模型的关键优势。但总链路带宽在VC间共享——仲裁决定每个VC获得的份额。
+> 每VC独立FC缓冲——一个VC信用饥饿不阻塞其他VC。但总链路带宽共享——仲裁决定每VC份额，一个VC持续高利用率可减少其他VC的可用带宽。FC(每VC缓冲管理)与仲裁(每VC带宽分配)的相互作用是PCIe QoS设计的核心。
