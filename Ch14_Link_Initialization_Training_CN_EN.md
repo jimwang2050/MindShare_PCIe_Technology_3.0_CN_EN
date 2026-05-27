@@ -14,6 +14,9 @@ Link initialization and training is a **hardware-based process** controlled by t
 
 The LTSSM has 11 top-level states: **Detect, Polling, Configuration, Recovery, L0, L0s, L1, L2, Hot Reset, Disabled, Loopback**. Each contains multiple substates. The LTSSM operates on main power only — when main power is removed, the LTSSM stops and resets. The two LTSSMs on opposite ends of each Link communicate via Training Sequence Ordered Sets (TS1/TS2) to negotiate all Link parameters.
 
+> LTSSM有11个顶级状态，每个含多个子状态。仅主电源供电——主电源移除时LTSSM停止并复位。链路两端两个LTSSM通过训练序列有序集(TS1/TS2)通信协商所有链路参数。
+
+
 > LTSSM有11个顶级状态，每个含多个子状态。仅主电源供电。链路两端两个LTSSM通过训练序列有序集(TS1/TS2)通信协商所有链路参数。
 
 ---
@@ -24,7 +27,13 @@ The LTSSM has 11 top-level states: **Detect, Polling, Configuration, Recovery, L
 
 **Gen1/Gen2 (8b/10b):** TS1/TS2 are 16-Symbol Ordered Sets starting with COM (K28.5). Symbol Lock acquired from COM. The TS Identifier in Symbols 6-9 distinguishes TS1 (4Ah) from TS2 (45h).
 
+> Gen1/Gen2(8b/10b)：TS1/TS2是16-Symbol有序集以COM(K28.5)起始。从COM获取符号锁定。Symbols 6-9中TS Identifier区分TS1(4Ah)和TS2(45h)。
+
+
 **Gen3 (128b/130b):** TS1/TS2 are 130-bit Ordered Set Blocks identified by Sync Header = 10b. First Symbol after Sync Header = 1Eh (TS1) or 2Dh (TS2). All fields are block-aligned.
+
+> Gen3(128b/130b)：TS1/TS2是130位有序集块，由Sync Header=10b标识。Sync Header后第一个Symbol=1Eh(TS1)或2Dh(TS2)。所有字段块对齐。
+
 
 ### Detailed TS1/TS2 Symbol Fields
 
@@ -34,11 +43,17 @@ The LTSSM has 11 top-level states: **Detect, Polling, Configuration, Recovery, L
 
 **Symbol 2 — Lane Number (0-31):** Assigned during Configuration per Lane. Polling uses PAD. Later, each Lane gets unique number within its Link (0 to N−1 for N-Lane width). Used for de-skew and data reassembly.
 
-**Symbol 3 — N_FTS:** Fast Training Sequence count required by receiver for L0s exit. Transmitter sends at least this many FTSs when exiting L0s. Extended Synch bit → 4096 FTSs for external monitoring tools. Timing example at 2.5 GT/s: 200 FTS × 4 Symbols/FTS × 4 ns = 3200 ns.
+**Symbol 3 — N_FTS:** Fast Training Sequence count required by receiver for L0s exit. Transmitter sends at least this many FTSs when exiting L0s. Extended Synch bit → 4096 FTSs for external monitoring tools.
+
+> N_FTS是接收端L0s退出所需FTS数量。Extended Synch位→4096个FTS用于外部监控工具。2.5 GT/s下：200 FTS × 4 Symbols/FTS × 4 ns = 3200 ns。
+ Timing example at 2.5 GT/s: 200 FTS × 4 Symbols/FTS × 4 ns = 3200 ns.
 
 **Symbol 4 — Rate ID:** Reports supported data rates (2.5 GT/s mandatory). Sub-fields: Autonomous Change (set=power mgmt, cleared=unreliable ops), Selectable De-emphasis (5.0 GT/s), Link Upconfigure Capability.
 
 **Symbol 5 — Training Control:** Hot Reset, Enable Loopback, Disable Link, Disable Scrambling, Compliance Receive bits.
+
+> Rate ID报告支持的数据速率(2.5 GT/s强制)。子字段：Autonomous Change(置位=PM原因/清除=不可靠操作)、Selectable De-emphasis(5.0 GT/s)、Link Upconfigure Capability。Training Control包含Hot Reset/Enable Loopback/Disable Link/Disable Scrambling/Compliance Receive位。
+
 
 **Symbols 6-9 — TS Identifier:** Distinguishes TS1 from TS2 in Gen1/Gen2.
 
@@ -78,10 +93,16 @@ Fully configures the Link: assigns Link/Lane numbers, negotiates final width, de
 
 1. **Linkwidth.Start:** Downstream Port proposes Link width (max detected lanes) via TS1s. Upstream echoes.
 2. **Linkwidth.Accept:** Final width locked. Unused lanes marked inactive.
+
+> Configuration六子状态：Linkwidth.Start(提议宽度)→Accept(锁定)→Lanenum.Wait(TS1→TS2信号)→Accept(确认)→Complete(所有参数锁存)→Idle(空闲后转L0)。不使用的通道标记为不活跃。通道间去偏斜使用COM/Sync Header对齐。
+
 3. **Lanenum.Wait:** **Switch from TS1 to TS2** — signals ready to finalize Lane numbering. Each Lane gets unique Lane Number (0…N−1).
 4. **Lanenum.Accept:** Upstream confirms Lane numbering by echoing TS2s.
 5. **Complete:** All config agreed. TS2s continue. Link/Lane numbers, N_FTS, data rate latched into internal registers. Upconfigure capability recorded.
 6. **Idle:** TS2s stop. Idle data instead. After minimum idle period (both sides see valid idle), transition to L0.
+
+> L0正常操作连续发送包或空闲。L0s(仅Gen1/Gen2)按方向独立极短延迟——空闲→EIOS→电气空闲，退出：FTS(数量基于N_FTS)+SKP OS→恢复操作。
+
 
 **Lane-to-Lane De-skew:** COM/Sync Header provides reference — receiver measures arrival time differences across Lanes, delays earlier arrivals to align with latest Lane.
 
@@ -106,6 +127,9 @@ Entered from L0/L0s/L1 when Link must re-sync. All Lanes re-establish Bit/Symbol
 **RcvrCfg:** TS2s exchanged. Confirms Link/Lane config. Communicates speed/width change intent.
 
 **Speed:** Data rate change. Both sides switch to new rate simultaneously. If lock fails → fall back to previous rate (or Detect).
+
+> Recovery：链路重同步入口(从L0/L0s/L1)。RcvrLock(TS1重获锁定，24ms超时)→RcvrCfg(TS2确认配置，通信速率/宽度变更意图)→Speed(双方同时切换速率，失败则退回或转Detect)→Equalization(Gen3四阶段均衡)→Idle→L0。
+
 
 **Equalization (Gen3, 4 phases):** Phase 0: Upstream advertises preset/coefficients, Downstream requests adjustments. Phase 1: Downstream TX equalized. Phase 2: Upstream TX equalized. Phase 3: Final lock confirmation.
 

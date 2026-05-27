@@ -42,6 +42,8 @@ The 8b/10b encoder maps 8-bit bytes to 10-bit Symbols from a table of 256 Data (
 
 These K-codes are never used for data — their unique bit patterns guarantee unambiguous identification even with bit errors.
 
+> 这12个K码从不用作数据字节——它们的唯一位模式确保即使在位错误下也能被无误识别。
+
 ---
 
 ## Symbol Time and Bandwidth / 符号时间与带宽
@@ -62,6 +64,8 @@ The Physical Layer wraps TLPs and DLLPs with framing Symbols:
 
 The framing Symbols enable the receiver to locate packet boundaries within the continuous serial stream, even after scrambling.
 
+> 物理层用定帧Symbol包裹TLP和DLLP：TLP使用STP起始→数据→END(好)或EDB(坏)；DLLP使用SDP起始→6字节数据→END，DLLP始终8个Symbol(SDP+6数据+END)。定帧Symbol使接收端可在扰码后的连续串行流中定位包边界。
+
 ---
 
 ## Ordered Sets / 有序集
@@ -76,11 +80,14 @@ Ordered Sets begin with COM (K28.5) and serve Link management functions. Key Ord
 
 **FTS (Fast Training Sequence):** K28.1 + three D symbols. Sent when exiting L0s for fast lock re-acquisition.
 
+> 有序集以COM(K28.5)开头服务于链路管理。TS1/TS2是16-Symbol训练序列在LTSSM训练期间交换(Ch14)，携带Link#、Lane#、N_FTS、Rate ID、Training Control。SKP用于时钟容差补偿(±300 ppm)，Gen1每1180 Symbol Time发送一次、Gen2每590。EIOS警告接收端发送端即将进入电气空闲。FTS为K28.1+三个D符号，用于L0s退出时快速重新获取锁定。
+
 ---
 
 ## Scrambling / 扰码
 
-All TLP/DLLP data and logical idle are scrambled using a 16-bit LFSR (polynomial X^16+X^5+X^4+X^3+1). Initialized to FFFFh at start of transmission and advanced once per Symbol (except during Ordered Sets, which bypass scrambling). Prevents repetitive patterns causing EMI and clock recovery issues.
+All TLP/DLLP data and logical idle are scrambled using a 16-bit LFSR (polynomial X^16+X^5+X^4+X^3+1). Initialized to FFFFh at start of transmission and advanced once per Symbol (except during Ordered Sets, which bypass scrambling). > 所有TLP/DLLP数据和逻辑空闲使用16位LFSR(多项式X^16+X^5+X^4+X^3+1)进行扰码。传输开始时初始化为FFFFh，每Symbol前进一次(有序集不扰码)。防止重复模式产生EMI和时钟恢复问题。
+
 
 ---
 

@@ -32,7 +32,13 @@ The Sync Header creates a fundamental difference from Gen1/Gen2 — in Gen1/Gen2
 
 > Sync Header创造与Gen1/Gen2的根本差异——Gen1/Gen2中COM字符在Symbol级区分有序集与数据。Gen3中Sync Header在块级区分。接收端先实现块锁定(识别130位块边界)，然后检查Sync Header分类每块。
 
+
+> Sync Header创造与Gen1/Gen2的根本差异——Gen1/Gen2中COM字符在Symbol级区分有序集与数据。Gen3中Sync Header在块级区分。接收端先实现块锁定(识别130位块边界)，然后检查Sync Header分类每块。
+
 **Data Block Framing Tokens:** Within a Data Block (01b), the 128-bit payload contains bit-level framing tokens indicating TLP start, TLP end, DLLP boundaries, and logical idle segments — analogous to STP/SDP/END/IDL Symbols in Gen1/Gen2 but implemented as compact bit tokens within the payload.
+
+> 数据块(01b)内128位payload包含位级定帧令牌，指示TLP起始/结束、DLLP边界和逻辑空闲片段——类似于Gen1/Gen2中的STP/SDP/END/IDL Symbol但实现为payload内的紧凑位令牌。
+
 
 ---
 
@@ -41,6 +47,9 @@ The Sync Header creates a fundamental difference from Gen1/Gen2 — in Gen1/Gen2
 **Scrambler:** 23-bit LFSR (polynomial X^23+X^21+X^16+X^8+X^5+X^2+1) applied to Data Block payloads only. Sync Headers and Ordered Set Blocks are NOT scrambled. The 23-bit LFSR provides a longer pseudo-random sequence than the Gen1/Gen2 16-bit LFSR, avoiding repetitive patterns with the larger block size.
 
 **Precoder (1/(1+D) filter):** Applied after scrambling at 8.0 GT/s to shape the output spectrum — reduces low-frequency content, improving signal integrity over AC-coupled channels. The receiver applies the inverse filter (1+D) before descrambling.
+
+> 预编码器(1/(1+D)滤波器)在扰码后应用于8.0 GT/s，整形输出频谱减少低频分量，改善AC耦合信道信号完整性。接收端在去扰码前应用逆滤波器(1+D)。
+
 
 > 扰码器23位LFSR应用于数据块payload。Sync Header和有序集块不扰码。23位LFSR提供比16位更长的伪随机序列。预编码器(1/(1+D)滤波器)扰码后应用，整形输出频谱减少低频分量。接收端先逆滤波(1+D)再去扰码。
 
@@ -57,7 +66,10 @@ Gen3 Ordered Sets fundamentally differ from Gen1/Gen2:
 
 **EIEOS (Electrical Idle Exit Ordered Set):** A longer, more distinctive pattern for reliable Electrical Idle exit detection at 8.0 GT/s. The higher data rate means shorter UI (125 ps) — more bits are needed for reliable detection.
 
-**SDS (Start of Data Stream):** Sent at the very end of training (Configuration.Idle → L0 boundary) to signal the transition from Ordered Sets to Data Blocks. Acts as a delimiter: "the next block will be a Data Block."
+**SDS (Start of Data Stream):** Sent at the very end of training (Configuration.Idle → L0 boundary) to signal the transition from Ordered Sets to Data Blocks. Acts as a delimiter: "the next block will be a Data Block.
+
+> EIEOS用于在8.0 GT/s下可靠检测电气空闲退出。SDS在训练最末尾发送，信号从有序集转换到数据块："下一个块将是数据块"。SKP有序集块格式(130位块，Sync Header=10b)。
+"
 
 **SKP Ordered Set:** Clock compensation still needed (±300 ppm) but the block format differs — each SKP OS is a complete 130-bit block identified by Sync Header = 10b.
 
@@ -66,6 +78,9 @@ Gen3 Ordered Sets fundamentally differ from Gen1/Gen2:
 ## Receiver Block Lock / 接收端块锁定
 
 Block Lock is the Gen3 equivalent of Symbol Lock. The receiver searches for the 2-bit Sync Header pattern to identify 130-bit block boundaries. Since Sync Headers appear at fixed intervals, the receiver correlates the expected pattern with the incoming stream to achieve lock. Once Block Lock is achieved, each 130-bit block can be reliably identified.
+
+> 块锁定是Gen3的符号锁定等价：接收端搜索2位Sync Header模式识别130位块边界。Sync Header以固定间隔出现，接收端将期望模式与输入流关联实现锁定。
+
 
 ---
 
@@ -77,6 +92,9 @@ At 8.0 GT/s, simple de-emphasis is insufficient — the channel has significant 
 - **Coefficients:** Pre-cursor (C−1), main cursor (C0), post-cursor (C+1)
 - **4-Phase Process:** Phase 0 exchanges presets → Phase 1 downstream adjusts → Phase 2 upstream adjusts → Phase 3 finalizes
 - Coefficients communicated via EQ Info fields in TS1/TS2 blocks
+
+> 8.0 GT/s下去加重不足——Nyquist 4 GHz下信道有显著频率相关损耗。Gen3引入全发送端均衡：前标(C-1)预补偿先前位ISI、主标(C0)归一化1.0、后标(C+1)补偿反射。多个预设针对常见信道类型。系数在Recovery.Equalization四阶段中通过TS1/TS2块EQ Info字段通信微调。
+
 
 > 8.0 GT/s下去加重不足。Gen3引入全发送端均衡：预定义系数预设(短/中/长距离)、前标(C-1)/主标(C0)/后标(C+1)系数、Phase 0-3四阶段迭代均衡过程。系数通过TS1/TS2块中EQ Info字段通信。
 
