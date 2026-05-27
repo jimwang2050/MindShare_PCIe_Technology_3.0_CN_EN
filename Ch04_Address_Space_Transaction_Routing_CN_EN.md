@@ -127,6 +127,70 @@ Messages were introduced to replace the side-band signals (interrupts, errors, p
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/ch04/fig_ch04_p180.png" alt="Figure (p.180)" width="95%">
+<br><em>Figure from ch04 (p.180) / ch04插图 (p.180)</em>
+</p>
+
+<p align="center">
+<img src="images/ch04/fig_ch04_p183.png" alt="Figure (p.183)" width="95%">
+<br><em>Figure from ch04 (p.183) / ch04插图 (p.183)</em>
+</p>
+
+<p align="center">
+<img src="images/ch04/fig_ch04_p186.png" alt="Figure (p.186)" width="95%">
+<br><em>Figure from ch04 (p.186) / ch04插图 (p.186)</em>
+</p>
+
+<p align="center">
+<img src="images/ch04/fig_ch04_p189.png" alt="Figure (p.189)" width="95%">
+<br><em>Figure from ch04 (p.189) / ch04插图 (p.189)</em>
+</p>
+
+<p align="center">
+<img src="images/ch04/fig_ch04_p192.png" alt="Figure (p.192)" width="95%">
+<br><em>Figure from ch04 (p.192) / ch04插图 (p.192)</em>
+</p>
+
+<p align="center">
+<img src="images/ch04/fig_ch04_p195.png" alt="Figure (p.195)" width="95%">
+<br><em>Figure from ch04 (p.195) / ch04插图 (p.195)</em>
+</p>
+
+<p align="center">
+<img src="images/ch04/fig_ch04_p198.png" alt="Figure (p.198)" width="95%">
+<br><em>Figure from ch04 (p.198) / ch04插图 (p.198)</em>
+</p>
+
+<p align="center">
+<img src="images/ch04/fig_ch04_p201.png" alt="Figure (p.201)" width="95%">
+<br><em>Figure from ch04 (p.201) / ch04插图 (p.201)</em>
+</p>
+
+<p align="center">
+<img src="images/ch04/fig_ch04_p204.png" alt="Figure (p.204)" width="95%">
+<br><em>Figure from ch04 (p.204) / ch04插图 (p.204)</em>
+</p>
+
+<p align="center">
+<img src="images/ch04/fig_ch04_p207.png" alt="Figure (p.207)" width="95%">
+<br><em>Figure from ch04 (p.207) / ch04插图 (p.207)</em>
+</p>
+
+<p align="center">
+<img src="images/ch04/fig_ch04_p210.png" alt="Figure (p.210)" width="95%">
+<br><em>Figure from ch04 (p.210) / ch04插图 (p.210)</em>
+</p>
+
+<p align="center">
+<img src="images/ch04/fig_ch04_p213.png" alt="Figure (p.213)" width="95%">
+<br><em>Figure from ch04 (p.213) / ch04插图 (p.213)</em>
+</p>
+
+---
+
 ## 术语附录 | Terminology Appendix
 
 | English | 中文 | Notes |

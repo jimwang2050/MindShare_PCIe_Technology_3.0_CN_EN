@@ -92,6 +92,70 @@ ARI reinterprets the traditional Bus/Device/Function addressing by merging the 5
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/ch20/fig_ch20_p946.png" alt="Figure (p.946)" width="95%">
+<br><em>Figure from ch20 (p.946) / ch20插图 (p.946)</em>
+</p>
+
+<p align="center">
+<img src="images/ch20/fig_ch20_p948.png" alt="Figure (p.948)" width="95%">
+<br><em>Figure from ch20 (p.948) / ch20插图 (p.948)</em>
+</p>
+
+<p align="center">
+<img src="images/ch20/fig_ch20_p950.png" alt="Figure (p.950)" width="95%">
+<br><em>Figure from ch20 (p.950) / ch20插图 (p.950)</em>
+</p>
+
+<p align="center">
+<img src="images/ch20/fig_ch20_p952.png" alt="Figure (p.952)" width="95%">
+<br><em>Figure from ch20 (p.952) / ch20插图 (p.952)</em>
+</p>
+
+<p align="center">
+<img src="images/ch20/fig_ch20_p954.png" alt="Figure (p.954)" width="95%">
+<br><em>Figure from ch20 (p.954) / ch20插图 (p.954)</em>
+</p>
+
+<p align="center">
+<img src="images/ch20/fig_ch20_p956.png" alt="Figure (p.956)" width="95%">
+<br><em>Figure from ch20 (p.956) / ch20插图 (p.956)</em>
+</p>
+
+<p align="center">
+<img src="images/ch20/fig_ch20_p958.png" alt="Figure (p.958)" width="95%">
+<br><em>Figure from ch20 (p.958) / ch20插图 (p.958)</em>
+</p>
+
+<p align="center">
+<img src="images/ch20/fig_ch20_p960.png" alt="Figure (p.960)" width="95%">
+<br><em>Figure from ch20 (p.960) / ch20插图 (p.960)</em>
+</p>
+
+<p align="center">
+<img src="images/ch20/fig_ch20_p962.png" alt="Figure (p.962)" width="95%">
+<br><em>Figure from ch20 (p.962) / ch20插图 (p.962)</em>
+</p>
+
+<p align="center">
+<img src="images/ch20/fig_ch20_p964.png" alt="Figure (p.964)" width="95%">
+<br><em>Figure from ch20 (p.964) / ch20插图 (p.964)</em>
+</p>
+
+<p align="center">
+<img src="images/ch20/fig_ch20_p966.png" alt="Figure (p.966)" width="95%">
+<br><em>Figure from ch20 (p.966) / ch20插图 (p.966)</em>
+</p>
+
+<p align="center">
+<img src="images/ch20/fig_ch20_p968.png" alt="Figure (p.968)" width="95%">
+<br><em>Figure from ch20 (p.968) / ch20插图 (p.968)</em>
+</p>
+
+---
+
 ## Configuration Improvements / 配置改进
 
 ### Internal Error Reporting

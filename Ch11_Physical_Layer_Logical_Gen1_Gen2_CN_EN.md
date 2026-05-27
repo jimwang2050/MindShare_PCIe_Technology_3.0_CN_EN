@@ -90,6 +90,70 @@ In multi-Lane Links, data bytes are distributed round-robin. For x4: byte N → 
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/ch11/fig_ch11_p420.png" alt="Figure (p.420)" width="95%">
+<br><em>Figure from ch11 (p.420) / ch11插图 (p.420)</em>
+</p>
+
+<p align="center">
+<img src="images/ch11/fig_ch11_p423.png" alt="Figure (p.423)" width="95%">
+<br><em>Figure from ch11 (p.423) / ch11插图 (p.423)</em>
+</p>
+
+<p align="center">
+<img src="images/ch11/fig_ch11_p426.png" alt="Figure (p.426)" width="95%">
+<br><em>Figure from ch11 (p.426) / ch11插图 (p.426)</em>
+</p>
+
+<p align="center">
+<img src="images/ch11/fig_ch11_p429.png" alt="Figure (p.429)" width="95%">
+<br><em>Figure from ch11 (p.429) / ch11插图 (p.429)</em>
+</p>
+
+<p align="center">
+<img src="images/ch11/fig_ch11_p432.png" alt="Figure (p.432)" width="95%">
+<br><em>Figure from ch11 (p.432) / ch11插图 (p.432)</em>
+</p>
+
+<p align="center">
+<img src="images/ch11/fig_ch11_p435.png" alt="Figure (p.435)" width="95%">
+<br><em>Figure from ch11 (p.435) / ch11插图 (p.435)</em>
+</p>
+
+<p align="center">
+<img src="images/ch11/fig_ch11_p438.png" alt="Figure (p.438)" width="95%">
+<br><em>Figure from ch11 (p.438) / ch11插图 (p.438)</em>
+</p>
+
+<p align="center">
+<img src="images/ch11/fig_ch11_p441.png" alt="Figure (p.441)" width="95%">
+<br><em>Figure from ch11 (p.441) / ch11插图 (p.441)</em>
+</p>
+
+<p align="center">
+<img src="images/ch11/fig_ch11_p444.png" alt="Figure (p.444)" width="95%">
+<br><em>Figure from ch11 (p.444) / ch11插图 (p.444)</em>
+</p>
+
+<p align="center">
+<img src="images/ch11/fig_ch11_p447.png" alt="Figure (p.447)" width="95%">
+<br><em>Figure from ch11 (p.447) / ch11插图 (p.447)</em>
+</p>
+
+<p align="center">
+<img src="images/ch11/fig_ch11_p450.png" alt="Figure (p.450)" width="95%">
+<br><em>Figure from ch11 (p.450) / ch11插图 (p.450)</em>
+</p>
+
+<p align="center">
+<img src="images/ch11/fig_ch11_p453.png" alt="Figure (p.453)" width="95%">
+<br><em>Figure from ch11 (p.453) / ch11插图 (p.453)</em>
+</p>
+
+---
+
 ## Receiver Functions / 接收端功能
 
 **Lane Polarity Inversion:** Detected from inverted COM character. Automatically corrected.

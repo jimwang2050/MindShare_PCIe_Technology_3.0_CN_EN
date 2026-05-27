@@ -42,6 +42,60 @@ Two Message TLPs implement the lock protocol:
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/appD/fig_appD_p1022.png" alt="Figure (p.1022)" width="95%">
+<br><em>Figure from appD (p.1022) / appD插图 (p.1022)</em>
+</p>
+
+<p align="center">
+<img src="images/appD/fig_appD_p1023.png" alt="Figure (p.1023)" width="95%">
+<br><em>Figure from appD (p.1023) / appD插图 (p.1023)</em>
+</p>
+
+<p align="center">
+<img src="images/appD/fig_appD_p1024.png" alt="Figure (p.1024)" width="95%">
+<br><em>Figure from appD (p.1024) / appD插图 (p.1024)</em>
+</p>
+
+<p align="center">
+<img src="images/appD/fig_appD_p1025.png" alt="Figure (p.1025)" width="95%">
+<br><em>Figure from appD (p.1025) / appD插图 (p.1025)</em>
+</p>
+
+<p align="center">
+<img src="images/appD/fig_appD_p1026.png" alt="Figure (p.1026)" width="95%">
+<br><em>Figure from appD (p.1026) / appD插图 (p.1026)</em>
+</p>
+
+<p align="center">
+<img src="images/appD/fig_appD_p1027.png" alt="Figure (p.1027)" width="95%">
+<br><em>Figure from appD (p.1027) / appD插图 (p.1027)</em>
+</p>
+
+<p align="center">
+<img src="images/appD/fig_appD_p1028.png" alt="Figure (p.1028)" width="95%">
+<br><em>Figure from appD (p.1028) / appD插图 (p.1028)</em>
+</p>
+
+<p align="center">
+<img src="images/appD/fig_appD_p1029.png" alt="Figure (p.1029)" width="95%">
+<br><em>Figure from appD (p.1029) / appD插图 (p.1029)</em>
+</p>
+
+<p align="center">
+<img src="images/appD/fig_appD_p1030.png" alt="Figure (p.1030)" width="95%">
+<br><em>Figure from appD (p.1030) / appD插图 (p.1030)</em>
+</p>
+
+<p align="center">
+<img src="images/appD/fig_appD_p1031.png" alt="Figure (p.1031)" width="95%">
+<br><em>Figure from appD (p.1031) / appD插图 (p.1031)</em>
+</p>
+
+---
+
 ## Summary of Locking Rules / 锁定规则摘要
 
 ### Rules Related to the Initiation and Propagation of Locked Transactions

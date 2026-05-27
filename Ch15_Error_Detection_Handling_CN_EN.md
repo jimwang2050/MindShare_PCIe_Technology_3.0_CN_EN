@@ -149,6 +149,70 @@ ECRC is enabled/disabled through the AER Capabilities and Control register. If a
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/ch15/fig_ch15_p706.png" alt="Figure (p.706)" width="95%">
+<br><em>Figure from ch15 (p.706) / ch15插图 (p.706)</em>
+</p>
+
+<p align="center">
+<img src="images/ch15/fig_ch15_p710.png" alt="Figure (p.710)" width="95%">
+<br><em>Figure from ch15 (p.710) / ch15插图 (p.710)</em>
+</p>
+
+<p align="center">
+<img src="images/ch15/fig_ch15_p714.png" alt="Figure (p.714)" width="95%">
+<br><em>Figure from ch15 (p.714) / ch15插图 (p.714)</em>
+</p>
+
+<p align="center">
+<img src="images/ch15/fig_ch15_p718.png" alt="Figure (p.718)" width="95%">
+<br><em>Figure from ch15 (p.718) / ch15插图 (p.718)</em>
+</p>
+
+<p align="center">
+<img src="images/ch15/fig_ch15_p722.png" alt="Figure (p.722)" width="95%">
+<br><em>Figure from ch15 (p.722) / ch15插图 (p.722)</em>
+</p>
+
+<p align="center">
+<img src="images/ch15/fig_ch15_p726.png" alt="Figure (p.726)" width="95%">
+<br><em>Figure from ch15 (p.726) / ch15插图 (p.726)</em>
+</p>
+
+<p align="center">
+<img src="images/ch15/fig_ch15_p730.png" alt="Figure (p.730)" width="95%">
+<br><em>Figure from ch15 (p.730) / ch15插图 (p.730)</em>
+</p>
+
+<p align="center">
+<img src="images/ch15/fig_ch15_p734.png" alt="Figure (p.734)" width="95%">
+<br><em>Figure from ch15 (p.734) / ch15插图 (p.734)</em>
+</p>
+
+<p align="center">
+<img src="images/ch15/fig_ch15_p738.png" alt="Figure (p.738)" width="95%">
+<br><em>Figure from ch15 (p.738) / ch15插图 (p.738)</em>
+</p>
+
+<p align="center">
+<img src="images/ch15/fig_ch15_p742.png" alt="Figure (p.742)" width="95%">
+<br><em>Figure from ch15 (p.742) / ch15插图 (p.742)</em>
+</p>
+
+<p align="center">
+<img src="images/ch15/fig_ch15_p746.png" alt="Figure (p.746)" width="95%">
+<br><em>Figure from ch15 (p.746) / ch15插图 (p.746)</em>
+</p>
+
+<p align="center">
+<img src="images/ch15/fig_ch15_p750.png" alt="Figure (p.750)" width="95%">
+<br><em>Figure from ch15 (p.750) / ch15插图 (p.750)</em>
+</p>
+
+---
+
 ## Data Poisoning / 数据毒化
 
 When a TLP's data is known to be bad (but the header is intact), the **EP (Error Poisoned)** bit is set in the TLP header. The receiver may forward the poisoned data or discard it. If the data is used, the error propagates. Poisoning is essential for error forwarding — it marks data that was corrupted at one point so that an endpoint that eventually uses the data knows it is unreliable.

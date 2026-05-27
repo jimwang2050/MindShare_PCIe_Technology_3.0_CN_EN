@@ -6,6 +6,70 @@
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/glossary/fig_glossary_p1032.png" alt="Figure (p.1032)" width="95%">
+<br><em>Figure from glossary (p.1032) / glossary插图 (p.1032)</em>
+</p>
+
+<p align="center">
+<img src="images/glossary/fig_glossary_p1034.png" alt="Figure (p.1034)" width="95%">
+<br><em>Figure from glossary (p.1034) / glossary插图 (p.1034)</em>
+</p>
+
+<p align="center">
+<img src="images/glossary/fig_glossary_p1036.png" alt="Figure (p.1036)" width="95%">
+<br><em>Figure from glossary (p.1036) / glossary插图 (p.1036)</em>
+</p>
+
+<p align="center">
+<img src="images/glossary/fig_glossary_p1038.png" alt="Figure (p.1038)" width="95%">
+<br><em>Figure from glossary (p.1038) / glossary插图 (p.1038)</em>
+</p>
+
+<p align="center">
+<img src="images/glossary/fig_glossary_p1040.png" alt="Figure (p.1040)" width="95%">
+<br><em>Figure from glossary (p.1040) / glossary插图 (p.1040)</em>
+</p>
+
+<p align="center">
+<img src="images/glossary/fig_glossary_p1042.png" alt="Figure (p.1042)" width="95%">
+<br><em>Figure from glossary (p.1042) / glossary插图 (p.1042)</em>
+</p>
+
+<p align="center">
+<img src="images/glossary/fig_glossary_p1044.png" alt="Figure (p.1044)" width="95%">
+<br><em>Figure from glossary (p.1044) / glossary插图 (p.1044)</em>
+</p>
+
+<p align="center">
+<img src="images/glossary/fig_glossary_p1046.png" alt="Figure (p.1046)" width="95%">
+<br><em>Figure from glossary (p.1046) / glossary插图 (p.1046)</em>
+</p>
+
+<p align="center">
+<img src="images/glossary/fig_glossary_p1048.png" alt="Figure (p.1048)" width="95%">
+<br><em>Figure from glossary (p.1048) / glossary插图 (p.1048)</em>
+</p>
+
+<p align="center">
+<img src="images/glossary/fig_glossary_p1050.png" alt="Figure (p.1050)" width="95%">
+<br><em>Figure from glossary (p.1050) / glossary插图 (p.1050)</em>
+</p>
+
+<p align="center">
+<img src="images/glossary/fig_glossary_p1052.png" alt="Figure (p.1052)" width="95%">
+<br><em>Figure from glossary (p.1052) / glossary插图 (p.1052)</em>
+</p>
+
+<p align="center">
+<img src="images/glossary/fig_glossary_p1054.png" alt="Figure (p.1054)" width="95%">
+<br><em>Figure from glossary (p.1054) / glossary插图 (p.1054)</em>
+</p>
+
+---
+
 | English Term | 中文术语 | Description |
 |-------------|---------|-------------|
 | ACK DLLP | 确认DLLP | Acknowledge — Data Link Layer packet acknowledging successful receipt of TLPs |

@@ -100,6 +100,70 @@ A critical ordering rule: **Posted requests must be able to pass other Posted re
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/ch08/fig_ch08_p344.png" alt="Figure (p.344)" width="95%">
+<br><em>Figure from ch08 (p.344) / ch08插图 (p.344)</em>
+</p>
+
+<p align="center">
+<img src="images/ch08/fig_ch08_p345.png" alt="Figure (p.345)" width="95%">
+<br><em>Figure from ch08 (p.345) / ch08插图 (p.345)</em>
+</p>
+
+<p align="center">
+<img src="images/ch08/fig_ch08_p346.png" alt="Figure (p.346)" width="95%">
+<br><em>Figure from ch08 (p.346) / ch08插图 (p.346)</em>
+</p>
+
+<p align="center">
+<img src="images/ch08/fig_ch08_p347.png" alt="Figure (p.347)" width="95%">
+<br><em>Figure from ch08 (p.347) / ch08插图 (p.347)</em>
+</p>
+
+<p align="center">
+<img src="images/ch08/fig_ch08_p348.png" alt="Figure (p.348)" width="95%">
+<br><em>Figure from ch08 (p.348) / ch08插图 (p.348)</em>
+</p>
+
+<p align="center">
+<img src="images/ch08/fig_ch08_p349.png" alt="Figure (p.349)" width="95%">
+<br><em>Figure from ch08 (p.349) / ch08插图 (p.349)</em>
+</p>
+
+<p align="center">
+<img src="images/ch08/fig_ch08_p350.png" alt="Figure (p.350)" width="95%">
+<br><em>Figure from ch08 (p.350) / ch08插图 (p.350)</em>
+</p>
+
+<p align="center">
+<img src="images/ch08/fig_ch08_p351.png" alt="Figure (p.351)" width="95%">
+<br><em>Figure from ch08 (p.351) / ch08插图 (p.351)</em>
+</p>
+
+<p align="center">
+<img src="images/ch08/fig_ch08_p352.png" alt="Figure (p.352)" width="95%">
+<br><em>Figure from ch08 (p.352) / ch08插图 (p.352)</em>
+</p>
+
+<p align="center">
+<img src="images/ch08/fig_ch08_p353.png" alt="Figure (p.353)" width="95%">
+<br><em>Figure from ch08 (p.353) / ch08插图 (p.353)</em>
+</p>
+
+<p align="center">
+<img src="images/ch08/fig_ch08_p354.png" alt="Figure (p.354)" width="95%">
+<br><em>Figure from ch08 (p.354) / ch08插图 (p.354)</em>
+</p>
+
+<p align="center">
+<img src="images/ch08/fig_ch08_p355.png" alt="Figure (p.355)" width="95%">
+<br><em>Figure from ch08 (p.355) / ch08插图 (p.355)</em>
+</p>
+
+---
+
 ## Ordering Across Virtual Channels / 跨虚拟通道排序
 
 Ordering rules apply **only within the same Virtual Channel**. TLPs in different VCs have NO ordering relationship with each other. This independence is by design — it allows different traffic types (e.g., bulk data on VC0, isochronous streaming on VC1) to flow without ordering constraints from the other VC.

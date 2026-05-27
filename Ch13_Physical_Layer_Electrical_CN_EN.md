@@ -116,6 +116,70 @@ SSC modulates the reference clock by typically 0.5% down-spread (frequency reduc
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/ch13/fig_ch13_p506.png" alt="Figure (p.506)" width="95%">
+<br><em>Figure from ch13 (p.506) / ch13插图 (p.506)</em>
+</p>
+
+<p align="center">
+<img src="images/ch13/fig_ch13_p510.png" alt="Figure (p.510)" width="95%">
+<br><em>Figure from ch13 (p.510) / ch13插图 (p.510)</em>
+</p>
+
+<p align="center">
+<img src="images/ch13/fig_ch13_p514.png" alt="Figure (p.514)" width="95%">
+<br><em>Figure from ch13 (p.514) / ch13插图 (p.514)</em>
+</p>
+
+<p align="center">
+<img src="images/ch13/fig_ch13_p518.png" alt="Figure (p.518)" width="95%">
+<br><em>Figure from ch13 (p.518) / ch13插图 (p.518)</em>
+</p>
+
+<p align="center">
+<img src="images/ch13/fig_ch13_p522.png" alt="Figure (p.522)" width="95%">
+<br><em>Figure from ch13 (p.522) / ch13插图 (p.522)</em>
+</p>
+
+<p align="center">
+<img src="images/ch13/fig_ch13_p526.png" alt="Figure (p.526)" width="95%">
+<br><em>Figure from ch13 (p.526) / ch13插图 (p.526)</em>
+</p>
+
+<p align="center">
+<img src="images/ch13/fig_ch13_p530.png" alt="Figure (p.530)" width="95%">
+<br><em>Figure from ch13 (p.530) / ch13插图 (p.530)</em>
+</p>
+
+<p align="center">
+<img src="images/ch13/fig_ch13_p534.png" alt="Figure (p.534)" width="95%">
+<br><em>Figure from ch13 (p.534) / ch13插图 (p.534)</em>
+</p>
+
+<p align="center">
+<img src="images/ch13/fig_ch13_p538.png" alt="Figure (p.538)" width="95%">
+<br><em>Figure from ch13 (p.538) / ch13插图 (p.538)</em>
+</p>
+
+<p align="center">
+<img src="images/ch13/fig_ch13_p542.png" alt="Figure (p.542)" width="95%">
+<br><em>Figure from ch13 (p.542) / ch13插图 (p.542)</em>
+</p>
+
+<p align="center">
+<img src="images/ch13/fig_ch13_p546.png" alt="Figure (p.546)" width="95%">
+<br><em>Figure from ch13 (p.546) / ch13插图 (p.546)</em>
+</p>
+
+<p align="center">
+<img src="images/ch13/fig_ch13_p550.png" alt="Figure (p.550)" width="95%">
+<br><em>Figure from ch13 (p.550) / ch13插图 (p.550)</em>
+</p>
+
+---
+
 ## Low-Power Electrical States / 低功耗电气状态
 
 **Electrical Idle:** Differential voltage < 20 mVpp. Transmitter in high-impedance state. Receiver must detect exit (voltage > threshold) reliably.

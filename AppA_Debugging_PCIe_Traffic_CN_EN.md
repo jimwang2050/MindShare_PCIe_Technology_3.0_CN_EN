@@ -61,6 +61,70 @@ FC credit tracking shows available credits for each VC and FC type over time, he
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/appA/fig_appA_p976.png" alt="Figure (p.976)" width="95%">
+<br><em>Figure from appA (p.976) / appA插图 (p.976)</em>
+</p>
+
+<p align="center">
+<img src="images/appA/fig_appA_p977.png" alt="Figure (p.977)" width="95%">
+<br><em>Figure from appA (p.977) / appA插图 (p.977)</em>
+</p>
+
+<p align="center">
+<img src="images/appA/fig_appA_p978.png" alt="Figure (p.978)" width="95%">
+<br><em>Figure from appA (p.978) / appA插图 (p.978)</em>
+</p>
+
+<p align="center">
+<img src="images/appA/fig_appA_p979.png" alt="Figure (p.979)" width="95%">
+<br><em>Figure from appA (p.979) / appA插图 (p.979)</em>
+</p>
+
+<p align="center">
+<img src="images/appA/fig_appA_p980.png" alt="Figure (p.980)" width="95%">
+<br><em>Figure from appA (p.980) / appA插图 (p.980)</em>
+</p>
+
+<p align="center">
+<img src="images/appA/fig_appA_p981.png" alt="Figure (p.981)" width="95%">
+<br><em>Figure from appA (p.981) / appA插图 (p.981)</em>
+</p>
+
+<p align="center">
+<img src="images/appA/fig_appA_p982.png" alt="Figure (p.982)" width="95%">
+<br><em>Figure from appA (p.982) / appA插图 (p.982)</em>
+</p>
+
+<p align="center">
+<img src="images/appA/fig_appA_p983.png" alt="Figure (p.983)" width="95%">
+<br><em>Figure from appA (p.983) / appA插图 (p.983)</em>
+</p>
+
+<p align="center">
+<img src="images/appA/fig_appA_p984.png" alt="Figure (p.984)" width="95%">
+<br><em>Figure from appA (p.984) / appA插图 (p.984)</em>
+</p>
+
+<p align="center">
+<img src="images/appA/fig_appA_p985.png" alt="Figure (p.985)" width="95%">
+<br><em>Figure from appA (p.985) / appA插图 (p.985)</em>
+</p>
+
+<p align="center">
+<img src="images/appA/fig_appA_p986.png" alt="Figure (p.986)" width="95%">
+<br><em>Figure from appA (p.986) / appA插图 (p.986)</em>
+</p>
+
+<p align="center">
+<img src="images/appA/fig_appA_p987.png" alt="Figure (p.987)" width="95%">
+<br><em>Figure from appA (p.987) / appA插图 (p.987)</em>
+</p>
+
+---
+
 ## Traffic Generation / 流量生成
 
 **Pre-Silicon:** RTL testbenches with constrained-random or directed test generation.

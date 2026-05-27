@@ -46,6 +46,50 @@ PCIe is increasingly used as a fabric for system-level connectivity, including:
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/appB/fig_appB_p1000.png" alt="Figure (p.1000)" width="95%">
+<br><em>Figure from appB (p.1000) / appB插图 (p.1000)</em>
+</p>
+
+<p align="center">
+<img src="images/appB/fig_appB_p1001.png" alt="Figure (p.1001)" width="95%">
+<br><em>Figure from appB (p.1001) / appB插图 (p.1001)</em>
+</p>
+
+<p align="center">
+<img src="images/appB/fig_appB_p994.png" alt="Figure (p.994)" width="95%">
+<br><em>Figure from appB (p.994) / appB插图 (p.994)</em>
+</p>
+
+<p align="center">
+<img src="images/appB/fig_appB_p995.png" alt="Figure (p.995)" width="95%">
+<br><em>Figure from appB (p.995) / appB插图 (p.995)</em>
+</p>
+
+<p align="center">
+<img src="images/appB/fig_appB_p996.png" alt="Figure (p.996)" width="95%">
+<br><em>Figure from appB (p.996) / appB插图 (p.996)</em>
+</p>
+
+<p align="center">
+<img src="images/appB/fig_appB_p997.png" alt="Figure (p.997)" width="95%">
+<br><em>Figure from appB (p.997) / appB插图 (p.997)</em>
+</p>
+
+<p align="center">
+<img src="images/appB/fig_appB_p998.png" alt="Figure (p.998)" width="95%">
+<br><em>Figure from appB (p.998) / appB插图 (p.998)</em>
+</p>
+
+<p align="center">
+<img src="images/appB/fig_appB_p999.png" alt="Figure (p.999)" width="95%">
+<br><em>Figure from appB (p.999) / appB插图 (p.999)</em>
+</p>
+
+---
+
 ## SSD/Storage IO Expansion Boxes / SSD/存储I/O扩展盒
 
 PCIe is the dominant interface for high-performance solid-state storage:

@@ -41,6 +41,65 @@ PM DLLPs request Link power state transitions: **PM_Enter_L1**, **PM_Enter_L23**
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/ch09/fig_ch09_p366.png" alt="Figure (p.366)" width="95%">
+<br><em>Figure from ch09 (p.366) / ch09插图 (p.366)</em>
+</p>
+
+<p align="center">
+<img src="images/ch09/fig_ch09_p367.png" alt="Figure (p.367)" width="95%">
+<br><em>Figure from ch09 (p.367) / ch09插图 (p.367)</em>
+</p>
+
+<p align="center">
+<img src="images/ch09/fig_ch09_p368.png" alt="Figure (p.368)" width="95%">
+<br><em>Figure from ch09 (p.368) / ch09插图 (p.368)</em>
+</p>
+
+<p align="center">
+<img src="images/ch09/fig_ch09_p369.png" alt="Figure (p.369)" width="95%">
+<br><em>Figure from ch09 (p.369) / ch09插图 (p.369)</em>
+</p>
+
+<p align="center">
+<img src="images/ch09/fig_ch09_p370.png" alt="Figure (p.370)" width="95%">
+<br><em>Figure from ch09 (p.370) / ch09插图 (p.370)</em>
+</p>
+
+<p align="center">
+<img src="images/ch09/fig_ch09_p371.png" alt="Figure (p.371)" width="95%">
+<br><em>Figure from ch09 (p.371) / ch09插图 (p.371)</em>
+</p>
+
+<p align="center">
+<img src="images/ch09/fig_ch09_p372.png" alt="Figure (p.372)" width="95%">
+<br><em>Figure from ch09 (p.372) / ch09插图 (p.372)</em>
+</p>
+
+<p align="center">
+<img src="images/ch09/fig_ch09_p373.png" alt="Figure (p.373)" width="95%">
+<br><em>Figure from ch09 (p.373) / ch09插图 (p.373)</em>
+</p>
+
+<p align="center">
+<img src="images/ch09/fig_ch09_p374.png" alt="Figure (p.374)" width="95%">
+<br><em>Figure from ch09 (p.374) / ch09插图 (p.374)</em>
+</p>
+
+<p align="center">
+<img src="images/ch09/fig_ch09_p375.png" alt="Figure (p.375)" width="95%">
+<br><em>Figure from ch09 (p.375) / ch09插图 (p.375)</em>
+</p>
+
+<p align="center">
+<img src="images/ch09/fig_ch09_p376.png" alt="Figure (p.376)" width="95%">
+<br><em>Figure from ch09 (p.376) / ch09插图 (p.376)</em>
+</p>
+
+---
+
 ## DLLP CRC and Error Handling
 ## DLLP CRC与错误处理
 

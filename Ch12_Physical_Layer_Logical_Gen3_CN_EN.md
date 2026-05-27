@@ -82,6 +82,70 @@ At 8.0 GT/s, simple de-emphasis is insufficient — the channel has significant 
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/ch12/fig_ch12_p466.png" alt="Figure (p.466)" width="95%">
+<br><em>Figure from ch12 (p.466) / ch12插图 (p.466)</em>
+</p>
+
+<p align="center">
+<img src="images/ch12/fig_ch12_p469.png" alt="Figure (p.469)" width="95%">
+<br><em>Figure from ch12 (p.469) / ch12插图 (p.469)</em>
+</p>
+
+<p align="center">
+<img src="images/ch12/fig_ch12_p472.png" alt="Figure (p.472)" width="95%">
+<br><em>Figure from ch12 (p.472) / ch12插图 (p.472)</em>
+</p>
+
+<p align="center">
+<img src="images/ch12/fig_ch12_p475.png" alt="Figure (p.475)" width="95%">
+<br><em>Figure from ch12 (p.475) / ch12插图 (p.475)</em>
+</p>
+
+<p align="center">
+<img src="images/ch12/fig_ch12_p478.png" alt="Figure (p.478)" width="95%">
+<br><em>Figure from ch12 (p.478) / ch12插图 (p.478)</em>
+</p>
+
+<p align="center">
+<img src="images/ch12/fig_ch12_p481.png" alt="Figure (p.481)" width="95%">
+<br><em>Figure from ch12 (p.481) / ch12插图 (p.481)</em>
+</p>
+
+<p align="center">
+<img src="images/ch12/fig_ch12_p484.png" alt="Figure (p.484)" width="95%">
+<br><em>Figure from ch12 (p.484) / ch12插图 (p.484)</em>
+</p>
+
+<p align="center">
+<img src="images/ch12/fig_ch12_p487.png" alt="Figure (p.487)" width="95%">
+<br><em>Figure from ch12 (p.487) / ch12插图 (p.487)</em>
+</p>
+
+<p align="center">
+<img src="images/ch12/fig_ch12_p490.png" alt="Figure (p.490)" width="95%">
+<br><em>Figure from ch12 (p.490) / ch12插图 (p.490)</em>
+</p>
+
+<p align="center">
+<img src="images/ch12/fig_ch12_p493.png" alt="Figure (p.493)" width="95%">
+<br><em>Figure from ch12 (p.493) / ch12插图 (p.493)</em>
+</p>
+
+<p align="center">
+<img src="images/ch12/fig_ch12_p496.png" alt="Figure (p.496)" width="95%">
+<br><em>Figure from ch12 (p.496) / ch12插图 (p.496)</em>
+</p>
+
+<p align="center">
+<img src="images/ch12/fig_ch12_p499.png" alt="Figure (p.499)" width="95%">
+<br><em>Figure from ch12 (p.499) / ch12插图 (p.499)</em>
+</p>
+
+---
+
 ## Gen1/Gen2 vs Gen3 Summary / Gen1/Gen2 vs Gen3对比
 
 | Feature | Gen1/Gen2 | Gen3 |

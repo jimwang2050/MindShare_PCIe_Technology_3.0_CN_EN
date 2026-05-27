@@ -97,6 +97,70 @@ Acks must be transmitted within AckNak_LATENCY_TIMER values (defined per data ra
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/ch10/fig_ch10_p376.png" alt="Figure (p.376)" width="95%">
+<br><em>Figure from ch10 (p.376) / ch10插图 (p.376)</em>
+</p>
+
+<p align="center">
+<img src="images/ch10/fig_ch10_p379.png" alt="Figure (p.379)" width="95%">
+<br><em>Figure from ch10 (p.379) / ch10插图 (p.379)</em>
+</p>
+
+<p align="center">
+<img src="images/ch10/fig_ch10_p382.png" alt="Figure (p.382)" width="95%">
+<br><em>Figure from ch10 (p.382) / ch10插图 (p.382)</em>
+</p>
+
+<p align="center">
+<img src="images/ch10/fig_ch10_p385.png" alt="Figure (p.385)" width="95%">
+<br><em>Figure from ch10 (p.385) / ch10插图 (p.385)</em>
+</p>
+
+<p align="center">
+<img src="images/ch10/fig_ch10_p388.png" alt="Figure (p.388)" width="95%">
+<br><em>Figure from ch10 (p.388) / ch10插图 (p.388)</em>
+</p>
+
+<p align="center">
+<img src="images/ch10/fig_ch10_p391.png" alt="Figure (p.391)" width="95%">
+<br><em>Figure from ch10 (p.391) / ch10插图 (p.391)</em>
+</p>
+
+<p align="center">
+<img src="images/ch10/fig_ch10_p394.png" alt="Figure (p.394)" width="95%">
+<br><em>Figure from ch10 (p.394) / ch10插图 (p.394)</em>
+</p>
+
+<p align="center">
+<img src="images/ch10/fig_ch10_p397.png" alt="Figure (p.397)" width="95%">
+<br><em>Figure from ch10 (p.397) / ch10插图 (p.397)</em>
+</p>
+
+<p align="center">
+<img src="images/ch10/fig_ch10_p400.png" alt="Figure (p.400)" width="95%">
+<br><em>Figure from ch10 (p.400) / ch10插图 (p.400)</em>
+</p>
+
+<p align="center">
+<img src="images/ch10/fig_ch10_p403.png" alt="Figure (p.403)" width="95%">
+<br><em>Figure from ch10 (p.403) / ch10插图 (p.403)</em>
+</p>
+
+<p align="center">
+<img src="images/ch10/fig_ch10_p406.png" alt="Figure (p.406)" width="95%">
+<br><em>Figure from ch10 (p.406) / ch10插图 (p.406)</em>
+</p>
+
+<p align="center">
+<img src="images/ch10/fig_ch10_p409.png" alt="Figure (p.409)" width="95%">
+<br><em>Figure from ch10 (p.409) / ch10插图 (p.409)</em>
+</p>
+
+---
+
 | English | 中文 | Notes |
 |---------|------|-------|
 | Ack / Nak | 正确认/否定确认 | DLLP |

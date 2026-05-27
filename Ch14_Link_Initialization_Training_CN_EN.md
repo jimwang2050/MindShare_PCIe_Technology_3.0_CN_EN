@@ -133,6 +133,70 @@ Both occur through Recovery state. Downstream Port proposes; both sides must sup
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/ch14/fig_ch14_p564.png" alt="Figure (p.564)" width="95%">
+<br><em>Figure from ch14 (p.564) / ch14插图 (p.564)</em>
+</p>
+
+<p align="center">
+<img src="images/ch14/fig_ch14_p575.png" alt="Figure (p.575)" width="95%">
+<br><em>Figure from ch14 (p.575) / ch14插图 (p.575)</em>
+</p>
+
+<p align="center">
+<img src="images/ch14/fig_ch14_p586.png" alt="Figure (p.586)" width="95%">
+<br><em>Figure from ch14 (p.586) / ch14插图 (p.586)</em>
+</p>
+
+<p align="center">
+<img src="images/ch14/fig_ch14_p597.png" alt="Figure (p.597)" width="95%">
+<br><em>Figure from ch14 (p.597) / ch14插图 (p.597)</em>
+</p>
+
+<p align="center">
+<img src="images/ch14/fig_ch14_p608.png" alt="Figure (p.608)" width="95%">
+<br><em>Figure from ch14 (p.608) / ch14插图 (p.608)</em>
+</p>
+
+<p align="center">
+<img src="images/ch14/fig_ch14_p619.png" alt="Figure (p.619)" width="95%">
+<br><em>Figure from ch14 (p.619) / ch14插图 (p.619)</em>
+</p>
+
+<p align="center">
+<img src="images/ch14/fig_ch14_p630.png" alt="Figure (p.630)" width="95%">
+<br><em>Figure from ch14 (p.630) / ch14插图 (p.630)</em>
+</p>
+
+<p align="center">
+<img src="images/ch14/fig_ch14_p641.png" alt="Figure (p.641)" width="95%">
+<br><em>Figure from ch14 (p.641) / ch14插图 (p.641)</em>
+</p>
+
+<p align="center">
+<img src="images/ch14/fig_ch14_p652.png" alt="Figure (p.652)" width="95%">
+<br><em>Figure from ch14 (p.652) / ch14插图 (p.652)</em>
+</p>
+
+<p align="center">
+<img src="images/ch14/fig_ch14_p663.png" alt="Figure (p.663)" width="95%">
+<br><em>Figure from ch14 (p.663) / ch14插图 (p.663)</em>
+</p>
+
+<p align="center">
+<img src="images/ch14/fig_ch14_p674.png" alt="Figure (p.674)" width="95%">
+<br><em>Figure from ch14 (p.674) / ch14插图 (p.674)</em>
+</p>
+
+<p align="center">
+<img src="images/ch14/fig_ch14_p685.png" alt="Figure (p.685)" width="95%">
+<br><em>Figure from ch14 (p.685) / ch14插图 (p.685)</em>
+</p>
+
+---
+
 ## State Transition Summary
 
 | From → To | Trigger |

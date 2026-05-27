@@ -86,6 +86,70 @@ The Isochronous VC capability is typically used in embedded and consumer electro
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/ch07/fig_ch07_p304.png" alt="Figure (p.304)" width="95%">
+<br><em>Figure from ch07 (p.304) / ch07插图 (p.304)</em>
+</p>
+
+<p align="center">
+<img src="images/ch07/fig_ch07_p307.png" alt="Figure (p.307)" width="95%">
+<br><em>Figure from ch07 (p.307) / ch07插图 (p.307)</em>
+</p>
+
+<p align="center">
+<img src="images/ch07/fig_ch07_p310.png" alt="Figure (p.310)" width="95%">
+<br><em>Figure from ch07 (p.310) / ch07插图 (p.310)</em>
+</p>
+
+<p align="center">
+<img src="images/ch07/fig_ch07_p313.png" alt="Figure (p.313)" width="95%">
+<br><em>Figure from ch07 (p.313) / ch07插图 (p.313)</em>
+</p>
+
+<p align="center">
+<img src="images/ch07/fig_ch07_p316.png" alt="Figure (p.316)" width="95%">
+<br><em>Figure from ch07 (p.316) / ch07插图 (p.316)</em>
+</p>
+
+<p align="center">
+<img src="images/ch07/fig_ch07_p319.png" alt="Figure (p.319)" width="95%">
+<br><em>Figure from ch07 (p.319) / ch07插图 (p.319)</em>
+</p>
+
+<p align="center">
+<img src="images/ch07/fig_ch07_p322.png" alt="Figure (p.322)" width="95%">
+<br><em>Figure from ch07 (p.322) / ch07插图 (p.322)</em>
+</p>
+
+<p align="center">
+<img src="images/ch07/fig_ch07_p325.png" alt="Figure (p.325)" width="95%">
+<br><em>Figure from ch07 (p.325) / ch07插图 (p.325)</em>
+</p>
+
+<p align="center">
+<img src="images/ch07/fig_ch07_p328.png" alt="Figure (p.328)" width="95%">
+<br><em>Figure from ch07 (p.328) / ch07插图 (p.328)</em>
+</p>
+
+<p align="center">
+<img src="images/ch07/fig_ch07_p331.png" alt="Figure (p.331)" width="95%">
+<br><em>Figure from ch07 (p.331) / ch07插图 (p.331)</em>
+</p>
+
+<p align="center">
+<img src="images/ch07/fig_ch07_p334.png" alt="Figure (p.334)" width="95%">
+<br><em>Figure from ch07 (p.334) / ch07插图 (p.334)</em>
+</p>
+
+<p align="center">
+<img src="images/ch07/fig_ch07_p337.png" alt="Figure (p.337)" width="95%">
+<br><em>Figure from ch07 (p.337) / ch07插图 (p.337)</em>
+</p>
+
+---
+
 ## QoS and Flow Control Interaction / QoS与流控交互
 
 Since each VC has independent FC buffers, credit starvation on one VC cannot block traffic on other VCs. However, total Link bandwidth is shared — arbitration determines each VC's share, and sustained high utilization on one VC can reduce available bandwidth for others. This interplay between FC (buffer management per VC) and arbitration (bandwidth allocation per VC) is the core of PCIe QoS design.

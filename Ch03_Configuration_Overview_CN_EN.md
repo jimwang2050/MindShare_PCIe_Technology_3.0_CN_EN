@@ -141,6 +141,70 @@ PCIe supports hot-plug (adding/removing devices while the system is running). Wh
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/ch03/fig_ch03_p144.png" alt="Figure (p.144)" width="95%">
+<br><em>Figure from ch03 (p.144) / ch03插图 (p.144)</em>
+</p>
+
+<p align="center">
+<img src="images/ch03/fig_ch03_p147.png" alt="Figure (p.147)" width="95%">
+<br><em>Figure from ch03 (p.147) / ch03插图 (p.147)</em>
+</p>
+
+<p align="center">
+<img src="images/ch03/fig_ch03_p150.png" alt="Figure (p.150)" width="95%">
+<br><em>Figure from ch03 (p.150) / ch03插图 (p.150)</em>
+</p>
+
+<p align="center">
+<img src="images/ch03/fig_ch03_p153.png" alt="Figure (p.153)" width="95%">
+<br><em>Figure from ch03 (p.153) / ch03插图 (p.153)</em>
+</p>
+
+<p align="center">
+<img src="images/ch03/fig_ch03_p156.png" alt="Figure (p.156)" width="95%">
+<br><em>Figure from ch03 (p.156) / ch03插图 (p.156)</em>
+</p>
+
+<p align="center">
+<img src="images/ch03/fig_ch03_p159.png" alt="Figure (p.159)" width="95%">
+<br><em>Figure from ch03 (p.159) / ch03插图 (p.159)</em>
+</p>
+
+<p align="center">
+<img src="images/ch03/fig_ch03_p162.png" alt="Figure (p.162)" width="95%">
+<br><em>Figure from ch03 (p.162) / ch03插图 (p.162)</em>
+</p>
+
+<p align="center">
+<img src="images/ch03/fig_ch03_p165.png" alt="Figure (p.165)" width="95%">
+<br><em>Figure from ch03 (p.165) / ch03插图 (p.165)</em>
+</p>
+
+<p align="center">
+<img src="images/ch03/fig_ch03_p168.png" alt="Figure (p.168)" width="95%">
+<br><em>Figure from ch03 (p.168) / ch03插图 (p.168)</em>
+</p>
+
+<p align="center">
+<img src="images/ch03/fig_ch03_p171.png" alt="Figure (p.171)" width="95%">
+<br><em>Figure from ch03 (p.171) / ch03插图 (p.171)</em>
+</p>
+
+<p align="center">
+<img src="images/ch03/fig_ch03_p174.png" alt="Figure (p.174)" width="95%">
+<br><em>Figure from ch03 (p.174) / ch03插图 (p.174)</em>
+</p>
+
+<p align="center">
+<img src="images/ch03/fig_ch03_p177.png" alt="Figure (p.177)" width="95%">
+<br><em>Figure from ch03 (p.177) / ch03插图 (p.177)</em>
+</p>
+
+---
+
 ## 术语附录 | Terminology Appendix
 
 | English | 中文 | Notes |

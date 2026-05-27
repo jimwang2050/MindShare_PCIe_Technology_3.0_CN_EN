@@ -147,6 +147,70 @@ Messages: Fmt=01b (4DW header, typically no data). Type field = 10rrr₂ (r[2:0]
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/ch05/fig_ch05_p228.png" alt="Figure (p.228)" width="95%">
+<br><em>Figure from ch05 (p.228) / ch05插图 (p.228)</em>
+</p>
+
+<p align="center">
+<img src="images/ch05/fig_ch05_p231.png" alt="Figure (p.231)" width="95%">
+<br><em>Figure from ch05 (p.231) / ch05插图 (p.231)</em>
+</p>
+
+<p align="center">
+<img src="images/ch05/fig_ch05_p234.png" alt="Figure (p.234)" width="95%">
+<br><em>Figure from ch05 (p.234) / ch05插图 (p.234)</em>
+</p>
+
+<p align="center">
+<img src="images/ch05/fig_ch05_p237.png" alt="Figure (p.237)" width="95%">
+<br><em>Figure from ch05 (p.237) / ch05插图 (p.237)</em>
+</p>
+
+<p align="center">
+<img src="images/ch05/fig_ch05_p240.png" alt="Figure (p.240)" width="95%">
+<br><em>Figure from ch05 (p.240) / ch05插图 (p.240)</em>
+</p>
+
+<p align="center">
+<img src="images/ch05/fig_ch05_p243.png" alt="Figure (p.243)" width="95%">
+<br><em>Figure from ch05 (p.243) / ch05插图 (p.243)</em>
+</p>
+
+<p align="center">
+<img src="images/ch05/fig_ch05_p246.png" alt="Figure (p.246)" width="95%">
+<br><em>Figure from ch05 (p.246) / ch05插图 (p.246)</em>
+</p>
+
+<p align="center">
+<img src="images/ch05/fig_ch05_p249.png" alt="Figure (p.249)" width="95%">
+<br><em>Figure from ch05 (p.249) / ch05插图 (p.249)</em>
+</p>
+
+<p align="center">
+<img src="images/ch05/fig_ch05_p252.png" alt="Figure (p.252)" width="95%">
+<br><em>Figure from ch05 (p.252) / ch05插图 (p.252)</em>
+</p>
+
+<p align="center">
+<img src="images/ch05/fig_ch05_p255.png" alt="Figure (p.255)" width="95%">
+<br><em>Figure from ch05 (p.255) / ch05插图 (p.255)</em>
+</p>
+
+<p align="center">
+<img src="images/ch05/fig_ch05_p258.png" alt="Figure (p.258)" width="95%">
+<br><em>Figure from ch05 (p.258) / ch05插图 (p.258)</em>
+</p>
+
+<p align="center">
+<img src="images/ch05/fig_ch05_p261.png" alt="Figure (p.261)" width="95%">
+<br><em>Figure from ch05 (p.261) / ch05插图 (p.261)</em>
+</p>
+
+---
+
 ## 术语附录 | Terminology Appendix
 
 | English | 中文 | Notes |

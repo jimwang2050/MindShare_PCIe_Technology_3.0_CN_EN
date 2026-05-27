@@ -235,6 +235,70 @@ For PME from D3<sub>Cold</sub>, the PME context (PME_Status, Requester ID, and a
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/ch16/fig_ch16_p762.png" alt="Figure (p.762)" width="95%">
+<br><em>Figure from ch16 (p.762) / ch16插图 (p.762)</em>
+</p>
+
+<p align="center">
+<img src="images/ch16/fig_ch16_p769.png" alt="Figure (p.769)" width="95%">
+<br><em>Figure from ch16 (p.769) / ch16插图 (p.769)</em>
+</p>
+
+<p align="center">
+<img src="images/ch16/fig_ch16_p776.png" alt="Figure (p.776)" width="95%">
+<br><em>Figure from ch16 (p.776) / ch16插图 (p.776)</em>
+</p>
+
+<p align="center">
+<img src="images/ch16/fig_ch16_p783.png" alt="Figure (p.783)" width="95%">
+<br><em>Figure from ch16 (p.783) / ch16插图 (p.783)</em>
+</p>
+
+<p align="center">
+<img src="images/ch16/fig_ch16_p790.png" alt="Figure (p.790)" width="95%">
+<br><em>Figure from ch16 (p.790) / ch16插图 (p.790)</em>
+</p>
+
+<p align="center">
+<img src="images/ch16/fig_ch16_p797.png" alt="Figure (p.797)" width="95%">
+<br><em>Figure from ch16 (p.797) / ch16插图 (p.797)</em>
+</p>
+
+<p align="center">
+<img src="images/ch16/fig_ch16_p804.png" alt="Figure (p.804)" width="95%">
+<br><em>Figure from ch16 (p.804) / ch16插图 (p.804)</em>
+</p>
+
+<p align="center">
+<img src="images/ch16/fig_ch16_p811.png" alt="Figure (p.811)" width="95%">
+<br><em>Figure from ch16 (p.811) / ch16插图 (p.811)</em>
+</p>
+
+<p align="center">
+<img src="images/ch16/fig_ch16_p818.png" alt="Figure (p.818)" width="95%">
+<br><em>Figure from ch16 (p.818) / ch16插图 (p.818)</em>
+</p>
+
+<p align="center">
+<img src="images/ch16/fig_ch16_p825.png" alt="Figure (p.825)" width="95%">
+<br><em>Figure from ch16 (p.825) / ch16插图 (p.825)</em>
+</p>
+
+<p align="center">
+<img src="images/ch16/fig_ch16_p832.png" alt="Figure (p.832)" width="95%">
+<br><em>Figure from ch16 (p.832) / ch16插图 (p.832)</em>
+</p>
+
+<p align="center">
+<img src="images/ch16/fig_ch16_p839.png" alt="Figure (p.839)" width="95%">
+<br><em>Figure from ch16 (p.839) / ch16插图 (p.839)</em>
+</p>
+
+---
+
 ## Bridges and Power Management / 桥与电源管理
 
 When a Type 1 Function (virtual bridge) is in a non-D0 state:

@@ -36,6 +36,70 @@ Multiple independent processor domains can share PCIe resources through a combin
 
 ---
 
+## Key Figures / 关键图示
+
+<p align="center">
+<img src="images/appC/fig_appC_p1002.png" alt="Figure (p.1002)" width="95%">
+<br><em>Figure from appC (p.1002) / appC插图 (p.1002)</em>
+</p>
+
+<p align="center">
+<img src="images/appC/fig_appC_p1003.png" alt="Figure (p.1003)" width="95%">
+<br><em>Figure from appC (p.1003) / appC插图 (p.1003)</em>
+</p>
+
+<p align="center">
+<img src="images/appC/fig_appC_p1004.png" alt="Figure (p.1004)" width="95%">
+<br><em>Figure from appC (p.1004) / appC插图 (p.1004)</em>
+</p>
+
+<p align="center">
+<img src="images/appC/fig_appC_p1005.png" alt="Figure (p.1005)" width="95%">
+<br><em>Figure from appC (p.1005) / appC插图 (p.1005)</em>
+</p>
+
+<p align="center">
+<img src="images/appC/fig_appC_p1006.png" alt="Figure (p.1006)" width="95%">
+<br><em>Figure from appC (p.1006) / appC插图 (p.1006)</em>
+</p>
+
+<p align="center">
+<img src="images/appC/fig_appC_p1007.png" alt="Figure (p.1007)" width="95%">
+<br><em>Figure from appC (p.1007) / appC插图 (p.1007)</em>
+</p>
+
+<p align="center">
+<img src="images/appC/fig_appC_p1008.png" alt="Figure (p.1008)" width="95%">
+<br><em>Figure from appC (p.1008) / appC插图 (p.1008)</em>
+</p>
+
+<p align="center">
+<img src="images/appC/fig_appC_p1009.png" alt="Figure (p.1009)" width="95%">
+<br><em>Figure from appC (p.1009) / appC插图 (p.1009)</em>
+</p>
+
+<p align="center">
+<img src="images/appC/fig_appC_p1010.png" alt="Figure (p.1010)" width="95%">
+<br><em>Figure from appC (p.1010) / appC插图 (p.1010)</em>
+</p>
+
+<p align="center">
+<img src="images/appC/fig_appC_p1011.png" alt="Figure (p.1011)" width="95%">
+<br><em>Figure from appC (p.1011) / appC插图 (p.1011)</em>
+</p>
+
+<p align="center">
+<img src="images/appC/fig_appC_p1012.png" alt="Figure (p.1012)" width="95%">
+<br><em>Figure from appC (p.1012) / appC插图 (p.1012)</em>
+</p>
+
+<p align="center">
+<img src="images/appC/fig_appC_p1013.png" alt="Figure (p.1013)" width="95%">
+<br><em>Figure from appC (p.1013) / appC插图 (p.1013)</em>
+</p>
+
+---
+
 ## Address Translation / 地址翻译
 
 ### Direct Address Translation
